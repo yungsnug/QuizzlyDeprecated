@@ -103,17 +103,14 @@ export default class Courses extends React.Component {
   constructor(props) {
     super(props);
     console.log("Courses props", this.props);
-    var courses;
-    // if(this.props.courses !== undefined) {
-    //   courses = this.props.courses;
-    // } else if(this.props.params !== undefined) {
-    //   courses = JSON.parse(this.props.params.coursesData);
-    // }
-
     this.state = {
       dropdownValue: "CSCI 201",
       courses: courses201,
-      showModal: false
+      showModal: false,
+      modalInfo: {
+        modalType: "ADD_QUIZ",
+        title: "Add Quiz"
+      }
     };
   }
 
@@ -143,11 +140,26 @@ export default class Courses extends React.Component {
     this.setState({showModal: false});
   }
 
-  render() {
-    var modalInfo = {};
-    modalInfo.modalType = "ADD_COURSE";
-    modalInfo.title = "Add Course";
+  addQuiz() {
+    console.log("add quiz");
+    this.setState({
+      showModal: true,
+      modalType: "ADD_QUIZ",
+      title: "Add Quiz"
+    });
+  }
 
+  addQuizToCourse(quiz) {
+    console.log("Adding quiz '" +  quiz.title + "' in course " + this.state.dropdownValue);
+    var courses = this.state.courses;
+    for(var i = 0; i < courses.length; ++i) {
+      courses[i].quizzes.push({title: quiz.title});
+    }
+    this.setState({courses: courses});
+    this.closeModal();
+  }
+
+  render() {
     return (
       <Layout>
         <div id="courses" className="quizzlyContent">
@@ -157,15 +169,25 @@ export default class Courses extends React.Component {
           </select>
           {this.state.courses.map(function(course, i) {
             return (
-              <Course data={course} key={i} title={course} ref={'course' + i} />
+              <Course data={course} key={i} title={course} ref={'course' + i} footer={i} addQuiz={this.addQuiz.bind(this)} />
             );
           }, this)}
           <div className="addEntityButton" onClick={this.addCourse.bind(this)}>+</div>
         </div>
-        <Modal modalInfo={modalInfo} showModal={this.state.showModal} key={this.state.showModal} closeModal={this.closeModal.bind(this)}/>
+
+        {(() => {
+          if(this.state.showModal)
+            return (
+              <Modal
+                modalInfo={this.state.modalInfo}
+                showModal={this.state.showModal}
+                key={this.state.showModal}
+                closeModal={this.closeModal.bind(this)}
+                addQuizToCourse={this.addQuizToCourse.bind(this)}
+              />
+            );
+        })()}
       </Layout>
     );
   }
 }
-
-// { this.state.showModal ? <Modal modalInfo={modalInfo}/> : null }

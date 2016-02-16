@@ -27,7 +27,6 @@ export default class extends React.Component {
                 <div onClick={boundClick} key={i} title={question} ref={'question' + i} className="item">{question.title}</div>
               );
             }, this)}
-
           </div>
           <div className="footerButton" onClick={this.props.addQuestion.bind(this, this.props.quiz.title)}>+</div>
         </div>

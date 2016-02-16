@@ -20,23 +20,23 @@ export default class Modal extends React.Component {
 
   render() {
     var body = {};
+    var quiz = {jack: "conner"};
     if(this.state.modalType == "ADD_COURSE") {
       body = <AddCourseBody />;
     } else if(this.state.modalType == "ADD_QUIZ") {
-      body = <AddQuizBody />;
+      body = <AddQuizBody addQuizToCourse={this.props.addQuizToCourse.bind(this)} course={this.props.course} />;
     } else if(this.state.modalType == "ADD_QUESTION") {
       body = <AddQuestionBody />;
     }
 
     return (
-      <div id="modalContainer" className={this.state.showModal ? "show" : "hide"}>
+      <div id="modalContainer">
         <div id="modal">
           <div id="header">
             {this.state.title}
-            <span className="floatR pointer" onClick={this.props.closeModal.bind(this)}>X</span>
+            <span className="floatR pointer" onClick={this.props.closeModal.bind(this)}><img src="images/close.png" style={{"width":"12px"}}/></span>
           </div>
           <div id="body">{body}</div>
-          <div id="footer">+</div>
         </div>
       </div>
     );

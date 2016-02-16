@@ -7,23 +7,26 @@ export default class AddQuizBody extends React.Component {
     super(props);
 
     this.state = {
-      question: "",
       inputs: [
-        {letter: "A", answer: "", placeholder: "Answer A..."},
-        {letter: "B", answer: "", placeholder: "Answer B..."},
-        {letter: "C", answer: "", placeholder: "Answer C..."},
-        {letter: "D", answer: "", placeholder: "Answer D..."},
-        {letter: "E", answer: "", placeholder: "Answer E..."}
+        {letter: undefined, text: "", placeholder: "Question..."},
+        {letter: "A", text: "", placeholder: "Answer A..."},
+        {letter: "B", text: "", placeholder: "Answer B..."},
+        {letter: "C", text: "", placeholder: "Answer C..."}
       ]
     };
   }
 
-  handleChangeQ(event) {
-    this.setState({question: event.target.value});
-  }
   handleChange(i, event) {
     var inputs = this.state.inputs;
-    inputs[i].answer = event.target.value;
+    inputs[i].text = event.target.value;
+    this.setState({inputs: inputs});
+  }
+
+  addQuestion() {
+    var inputs = this.state.inputs;
+    var letter = String.fromCharCode(inputs[inputs.length - 1].letter.charCodeAt() + 1);
+    var input = {letter: letter, text: "", placeholder: "Answer " + letter + "..."};
+    inputs.push(input);
     this.setState({inputs: inputs});
   }
 
@@ -32,26 +35,26 @@ export default class AddQuizBody extends React.Component {
     return (
       <div id="addQuestionBody">
         <div className="row">
-          <div className="six columns pl20 pt20 pb20 pr10">
-            <div className="width100 greenBlueGradient white mont pt20 pb20 alignC pointer round outerShadow">FREE RESPONSE</div>
+          <div className="six columns p20 pr10">
+            <div className="modalButton">FREE RESPONSE</div>
           </div>
-          <div className="six columns pr20 pt20 pb20 pl10">
-            <div className="width100 greenBlueGradient white mont pt20 pb20 alignC pointer round outerShadow">MULTIPLE CHOICE</div>
+          <div className="six columns p20 pl10">
+            <div className="modalButton">MULTIPLE CHOICE</div>
           </div>
         </div>
         <div className="pl20 pr20">
-          <div className="flex">
-            Q.) <textarea name="question" value={this.state.question} onChange={this.handleChangeQ} />
-          </div>
           {this.state.inputs.map(function(input, i) {
             return (
-              <div className="flex show">
-                <span>{input.letter}.)</span>
+              <div className="flex mb20 flexVertical">
+                {(() => {
+                  if(input.letter)
+                    return (<span className="mr15">{input.letter}.)</span>)
+                })()}
                 <input
                   type="text"
                   className="addCourseInput"
                   placeholder={input.placeholder}
-                  value={input.answers}
+                  value={input.text}
                   onChange={me.handleChange.bind(me, i)}
                   key={i}
                 />
@@ -59,6 +62,7 @@ export default class AddQuizBody extends React.Component {
             );
           })}
         </div>
+        <div className="footerButton" onClick={this.addQuestion.bind(this)} >+</div>
       </div>
     );
   }

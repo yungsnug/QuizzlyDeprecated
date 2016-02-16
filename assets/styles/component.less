@@ -158,19 +158,19 @@
     .lightGreenBackground;
     .p10;
   }
+}
 
-  .footerButton {
-    .alignC;
-    .pointer;
-    margin-top: -1px;
-    .roundBottom;
-    .borderTop;
-    .lightGreenBackground;
-    .p10;
-    font-weight: 500;
-    &:hover {
-      background-color: darken(@lightGreen, 5%);
-    }
+.footerButton {
+  .alignC;
+  .pointer;
+  margin-top: -1px;
+  .roundBottom;
+  .borderTop;
+  .lightGreenBackground;
+  .p10;
+  font-weight: 500;
+  &:hover {
+    background-color: darken(@lightGreen, 5%);
   }
 }
 
@@ -196,7 +196,7 @@
   overflow: scroll;
 
   #modal {
-    max-width: 900px;
+    max-width: 700px;
     .round;
     background-color: @white;
     .outerShadow;
@@ -231,16 +231,39 @@
 }
 
 .addCourseInput {
-  background-color: @lightGray;
-  .round;
-  .gray;
-  .p;
-  .roboto;
-  font-weight: 300;
+  background-color: @lightestGray;
   border: none;
-  .mb20;
-  .p20;
-  width: 90%;
-  margin-right: auto;
-  .ml10;
+  .round;
+  .p;
+  padding-left: 15px; padding-top: 13px; padding-bottom: 13px;
+  .innerShadow;
+  width: 100%;
+}
+
+.modalButton {
+  .width100;
+  .greenBlueGradient;
+  color: white;
+  .mont;
+  .pt15; .pb15;
+  .alignC;
+  .pointer;
+  .round;
+  .outerShadow;
+  font-weight: 700;
+}
+
+.plusButton {
+  .alignC;
+  .pointer;
+  .round;
+  .border;
+  .borderTop;
+  .lightGreenBackground;
+  .p10;
+  font-weight: 500;
+  width: 26px;
+  &:hover {
+    background-color: darken(@lightGreen, 5%);
+  }
 }
