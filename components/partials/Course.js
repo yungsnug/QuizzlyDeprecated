@@ -15,8 +15,7 @@ export default class extends React.Component {
   }
 
   render() {
-    console.log("this.key", this.props.footer);
-    var footer = this.props.footer == 0 ? <div className="footerButton" onClick={this.props.addQuiz.bind(this)}>+</div> : null;
+    var footer = this.props.footer == 0 ? <div className="footerButton" onClick={this.props.addQuizModal.bind(this)}>+</div> : null;
     return (
       <div className="mainPanel">
         <div className="scrollRegion">

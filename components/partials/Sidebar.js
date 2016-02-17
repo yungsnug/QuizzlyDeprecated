@@ -111,7 +111,7 @@ export class Sidebar extends React.Component {
   }
 
   isActive(value){
-    console.log("isActive", value);
+    // console.log("isActive", value);
     return 'mt15 pt15 pb15 show ' + ((value === this.state.selected) ? 'greenBlueGradientLight' : '');
   }
 

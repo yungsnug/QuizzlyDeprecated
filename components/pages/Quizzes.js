@@ -128,7 +128,7 @@ export default class Quizzes extends React.Component {
     });
   }
 
-  addQuizState() {
+  addQuizModal() {
     var modalInfo = this.state.modalInfo;
     modalInfo.title = "Add Quiz";
     modalInfo.modalType = "ADD_QUIZ";
@@ -138,8 +138,7 @@ export default class Quizzes extends React.Component {
     });
   }
 
-  addQuestion(quizTitle, quizIndex) {
-    console.log("this.props.quiz.title", quizTitle);
+  addQuestionModal(quizTitle, quizIndex) {
     var modalInfo = this.state.modalInfo;
     modalInfo.title = "Adding quiz question to: " + quizTitle;
     modalInfo.modalType = "ADD_QUESTION";
@@ -159,11 +158,7 @@ export default class Quizzes extends React.Component {
     var quizzes = this.state.quizzes;
     var quiz = {
       title: quiz.title,
-      questions: [
-        {title: "What is Python?"},
-        {title: "What is a Java?"},
-        {title: "What is a C++"}
-      ]
+      questions: []
     };
     quizzes.push(quiz);
     this.setState({quizzes: quizzes});
@@ -171,9 +166,9 @@ export default class Quizzes extends React.Component {
   }
 
   addQuestionToQuiz(question, quizIndex) {
-    var quizIndex = 0;
+    if(question.title.trim().length == 0) return;
+
     console.log("Adding question '" +  question.title + "' in quiz " + this.state.quizzes[quizIndex].title);
-    return;
     var quizzes = this.state.quizzes;
     var question = {
       title: question.title
@@ -193,10 +188,10 @@ export default class Quizzes extends React.Component {
           </select>
           {this.state.quizzes.map(function(quiz, i) {
             return (
-              <Quiz quiz={quiz} key={i} ref={'quiz' + i} addQuestion={this.addQuestion.bind(this)} />
+              <Quiz quiz={quiz} key={i} ref={'quiz' + i} quizIndex={i} addQuestionModal={this.addQuestionModal.bind(this)} />
             );
           }, this)}
-          <div className="addEntityButton" onClick={this.addQuizState.bind(this)}>+</div>
+          <div className="addEntityButton" onClick={this.addQuizModal.bind(this)}>+</div>
         </div>
         {(() => {
           if(this.state.showModal)

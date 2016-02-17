@@ -121,7 +121,6 @@ var Courses = (function (_React$Component) {
     _classCallCheck(this, Courses);
 
     _get(Object.getPrototypeOf(Courses.prototype), "constructor", this).call(this, props);
-    console.log("Courses props", this.props);
     this.state = {
       dropdownValue: "CSCI 201",
       courses: courses201,
@@ -134,6 +133,11 @@ var Courses = (function (_React$Component) {
   }
 
   _createClass(Courses, [{
+    key: "closeModal",
+    value: function closeModal() {
+      this.setState({ showModal: false });
+    }
+  }, {
     key: "handleClick",
     value: function handleClick(num) {
       console.log("handle click!", num);
@@ -154,26 +158,25 @@ var Courses = (function (_React$Component) {
       });
     }
   }, {
-    key: "addCourse",
-    value: function addCourse() {
+    key: "addCourseModal",
+    value: function addCourseModal() {
+      var modalInfo = this.state.modalInfo;
+      modalInfo.title = "Add Course";
+      modalInfo.modalType = "ADD_COURSE";
       this.setState({
         showModal: true,
-        modalType: "ADD_COURSE",
-        title: "Add Course"
+        modalInfo: modalInfo
       });
     }
   }, {
-    key: "closeModal",
-    value: function closeModal() {
-      this.setState({ showModal: false });
-    }
-  }, {
-    key: "addQuiz",
-    value: function addQuiz() {
+    key: "addQuizModal",
+    value: function addQuizModal() {
+      var modalInfo = this.state.modalInfo;
+      modalInfo.title = "Add Quiz";
+      modalInfo.modalType = "ADD_QUIZ";
       this.setState({
         showModal: true,
-        modalType: "ADD_QUIZ",
-        title: "Add Quiz"
+        modalInfo: modalInfo
       });
     }
   }, {
@@ -213,11 +216,11 @@ var Courses = (function (_React$Component) {
             )
           ),
           this.state.courses.map(function (course, i) {
-            return _react2["default"].createElement(_partialsCourseJs2["default"], { data: course, key: i, title: course, ref: 'course' + i, footer: i, addQuiz: this.addQuiz.bind(this) });
+            return _react2["default"].createElement(_partialsCourseJs2["default"], { data: course, key: i, title: course, ref: 'course' + i, footer: i, addQuizModal: this.addQuizModal.bind(this) });
           }, this),
           _react2["default"].createElement(
             "div",
-            { className: "addEntityButton", onClick: this.addCourse.bind(this) },
+            { className: "addEntityButton", onClick: this.addCourseModal.bind(this) },
             "+"
           )
         ),
@@ -490,8 +493,8 @@ var Quizzes = (function (_React$Component) {
       });
     }
   }, {
-    key: 'addQuizState',
-    value: function addQuizState() {
+    key: 'addQuizModal',
+    value: function addQuizModal() {
       var modalInfo = this.state.modalInfo;
       modalInfo.title = "Add Quiz";
       modalInfo.modalType = "ADD_QUIZ";
@@ -501,9 +504,8 @@ var Quizzes = (function (_React$Component) {
       });
     }
   }, {
-    key: 'addQuestion',
-    value: function addQuestion(quizTitle, quizIndex) {
-      console.log("this.props.quiz.title", quizTitle);
+    key: 'addQuestionModal',
+    value: function addQuestionModal(quizTitle, quizIndex) {
       var modalInfo = this.state.modalInfo;
       modalInfo.title = "Adding quiz question to: " + quizTitle;
       modalInfo.modalType = "ADD_QUESTION";
@@ -525,7 +527,7 @@ var Quizzes = (function (_React$Component) {
       var quizzes = this.state.quizzes;
       var quiz = {
         title: quiz.title,
-        questions: [{ title: "What is Python?" }, { title: "What is a Java?" }, { title: "What is a C++" }]
+        questions: []
       };
       quizzes.push(quiz);
       this.setState({ quizzes: quizzes });
@@ -534,9 +536,9 @@ var Quizzes = (function (_React$Component) {
   }, {
     key: 'addQuestionToQuiz',
     value: function addQuestionToQuiz(question, quizIndex) {
-      var quizIndex = 0;
+      if (question.title.trim().length == 0) return;
+
       console.log("Adding question '" + question.title + "' in quiz " + this.state.quizzes[quizIndex].title);
-      return;
       var quizzes = this.state.quizzes;
       var question = {
         title: question.title
@@ -571,11 +573,11 @@ var Quizzes = (function (_React$Component) {
             )
           ),
           this.state.quizzes.map(function (quiz, i) {
-            return _react2['default'].createElement(_partialsQuizJs2['default'], { quiz: quiz, key: i, ref: 'quiz' + i, addQuestion: this.addQuestion.bind(this) });
+            return _react2['default'].createElement(_partialsQuizJs2['default'], { quiz: quiz, key: i, ref: 'quiz' + i, quizIndex: i, addQuestionModal: this.addQuestionModal.bind(this) });
           }, this),
           _react2['default'].createElement(
             'div',
-            { className: 'addEntityButton', onClick: this.addQuizState.bind(this) },
+            { className: 'addEntityButton', onClick: this.addQuizModal.bind(this) },
             '+'
           )
         ),
@@ -819,19 +821,19 @@ module.exports = exports["default"];
 },{"react":"react"}],10:[function(require,module,exports){
 "use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require('react');
 
@@ -843,12 +845,18 @@ var AddQuizBody = (function (_React$Component) {
   function AddQuizBody(props) {
     _classCallCheck(this, AddQuizBody);
 
-    _get(Object.getPrototypeOf(AddQuizBody.prototype), 'constructor', this).call(this, props);
-    this.state = props;
+    _get(Object.getPrototypeOf(AddQuizBody.prototype), "constructor", this).call(this, props);
+    this.state = {
+      question: {
+        title: "",
+        placeholder: "Question...",
+        inputs: [{ letter: "A", text: "", placeholder: "Answer A..." }, { letter: "B", text: "", placeholder: "Answer B..." }, { letter: "C", text: "", placeholder: "Answer C..." }]
+      }
+    };
   }
 
   _createClass(AddQuizBody, [{
-    key: 'handleChange',
+    key: "handleChange",
     value: function handleChange(i, event) {
       var me = this;
       var question = this.state.question;
@@ -861,7 +869,7 @@ var AddQuizBody = (function (_React$Component) {
       this.setState({ question: question });
     }
   }, {
-    key: 'addQuestion',
+    key: "addQuestion",
     value: function addQuestion() {
       var inputs = this.state.question.inputs;
       var letter = String.fromCharCode(inputs[inputs.length - 1].letter.charCodeAt() + 1);
@@ -870,74 +878,76 @@ var AddQuizBody = (function (_React$Component) {
       this.setState({ inputs: inputs });
     }
   }, {
-    key: 'showFreeResponse',
+    key: "showFreeResponse",
     value: function showFreeResponse() {
-      var input = [];
-      input.push(this.state.question.inputs[0]);
-      this.setState({ inputs: input });
+      var question = this.state.question;
+      question.inputs = [];
+      this.setState({ question: question });
     }
   }, {
-    key: 'showMultipleChoice',
+    key: "showMultipleChoice",
     value: function showMultipleChoice() {
-      this.setState(AddQuizBody.defaultProps);
+      var question = this.state.question;
+      question.inputs = [{ letter: "A", text: "", placeholder: "Answer A..." }, { letter: "B", text: "", placeholder: "Answer B..." }, { letter: "C", text: "", placeholder: "Answer C..." }];
+      this.setState({ question: question });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var me = this;
-      var questionInput = _react2['default'].createElement(
-        'div',
-        { className: 'flex mb20 flexVertical' },
-        _react2['default'].createElement('input', {
-          type: 'text',
-          className: 'addCourseInput',
+      var questionInput = _react2["default"].createElement(
+        "div",
+        { className: "flex mb20 flexVertical" },
+        _react2["default"].createElement("input", {
+          type: "text",
+          className: "addCourseInput",
           placeholder: this.state.question.placeholder,
           value: this.state.question.title,
           onChange: this.handleChange.bind(this, 'question')
         })
       );
-      return _react2['default'].createElement(
-        'div',
-        { id: 'addQuestionBody' },
-        _react2['default'].createElement(
-          'div',
-          { className: 'row' },
-          _react2['default'].createElement(
-            'div',
-            { className: 'six columns p20 pr10' },
-            _react2['default'].createElement(
-              'div',
-              { className: 'modalButton', onClick: this.showMultipleChoice.bind(this) },
-              'MULTIPLE CHOICE'
+      return _react2["default"].createElement(
+        "div",
+        { id: "addQuestionBody" },
+        _react2["default"].createElement(
+          "div",
+          { className: "row" },
+          _react2["default"].createElement(
+            "div",
+            { className: "six columns p20 pr10" },
+            _react2["default"].createElement(
+              "div",
+              { className: "modalButton", onClick: this.showMultipleChoice.bind(this) },
+              "MULTIPLE CHOICE"
             )
           ),
-          _react2['default'].createElement(
-            'div',
-            { className: 'six columns p20 pl10' },
-            _react2['default'].createElement(
-              'div',
-              { className: 'modalButton', onClick: this.showFreeResponse.bind(this) },
-              'FREE RESPONSE'
+          _react2["default"].createElement(
+            "div",
+            { className: "six columns p20 pl10" },
+            _react2["default"].createElement(
+              "div",
+              { className: "modalButton", onClick: this.showFreeResponse.bind(this) },
+              "FREE RESPONSE"
             )
           )
         ),
-        _react2['default'].createElement(
-          'div',
-          { className: 'pl20 pr20' },
+        _react2["default"].createElement(
+          "div",
+          { className: "pl20 pr20" },
           questionInput,
           this.state.question.inputs.map(function (input, i) {
-            return _react2['default'].createElement(
-              'div',
-              { className: 'flex mb20 flexVertical' },
-              _react2['default'].createElement(
-                'span',
-                { className: 'mr15' },
+            return _react2["default"].createElement(
+              "div",
+              { className: "flex mb20 flexVertical" },
+              _react2["default"].createElement(
+                "span",
+                { className: "mr15" },
                 input.letter,
-                '.)'
+                ".)"
               ),
-              _react2['default'].createElement('input', {
-                type: 'text',
-                className: 'addCourseInput',
+              _react2["default"].createElement("input", {
+                type: "text",
+                className: "addCourseInput",
                 placeholder: input.placeholder,
                 value: input.text,
                 onChange: me.handleChange.bind(me, i),
@@ -946,33 +956,29 @@ var AddQuizBody = (function (_React$Component) {
             );
           })
         ),
-        _react2['default'].createElement(
-          'button',
-          { onClick: this.props.addQuestionToQuiz.bind(this, me.state.question) },
-          'Add'
+        _react2["default"].createElement(
+          "div",
+          { className: "pb20 pl20 pr20" },
+          _react2["default"].createElement(
+            "div",
+            { className: "modalButton", onClick: this.props.addQuestionToQuiz.bind(this, this.state.question, this.props.quizIndex) },
+            "ADD QUESTION"
+          )
         ),
-        _react2['default'].createElement(
-          'div',
-          { className: 'footerButton', onClick: this.addQuestion.bind(this) },
-          '+'
+        _react2["default"].createElement(
+          "div",
+          { className: "footerButton", onClick: this.addQuestion.bind(this) },
+          "+"
         )
       );
     }
   }]);
 
   return AddQuizBody;
-})(_react2['default'].Component);
+})(_react2["default"].Component);
 
-exports['default'] = AddQuizBody;
-
-AddQuizBody.defaultProps = {
-  question: {
-    title: "",
-    placeholder: "Question...",
-    inputs: [{ letter: "A", text: "", placeholder: "Answer A..." }, { letter: "B", text: "", placeholder: "Answer B..." }, { letter: "C", text: "", placeholder: "Answer C..." }]
-  }
-};
-module.exports = exports['default'];
+exports["default"] = AddQuizBody;
+module.exports = exports["default"];
 
 },{"react":"react"}],11:[function(require,module,exports){
 "use strict";
@@ -1098,10 +1104,9 @@ var _default = (function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log("this.key", this.props.footer);
       var footer = this.props.footer == 0 ? _react2["default"].createElement(
         "div",
-        { className: "footerButton", onClick: this.props.addQuiz.bind(this) },
+        { className: "footerButton", onClick: this.props.addQuizModal.bind(this) },
         "+"
       ) : null;
       return _react2["default"].createElement(
@@ -1256,7 +1261,6 @@ var Modal = (function (_React$Component) {
     _classCallCheck(this, Modal);
 
     _get(Object.getPrototypeOf(Modal.prototype), 'constructor', this).call(this, props);
-    console.log("Modal props", this.props);
 
     this.state = {
       showModal: props.showModal,
@@ -1269,7 +1273,6 @@ var Modal = (function (_React$Component) {
     key: 'render',
     value: function render() {
       var body = {};
-      var quiz = { jack: "conner" };
       if (this.state.modalType == "ADD_COURSE") {
         body = _react2['default'].createElement(_partialsAddCourseBodyJs2['default'], null);
       } else if (this.state.modalType == "ADD_QUIZ") {
@@ -1377,7 +1380,7 @@ var _default = (function (_React$Component) {
           ),
           _react2["default"].createElement(
             "div",
-            { className: "footerButton", onClick: this.props.addQuestion.bind(this, this.props.quiz.title, this.props.key) },
+            { className: "footerButton", onClick: this.props.addQuestionModal.bind(this, this.props.quiz.title, this.props.quizIndex) },
             "+"
           )
         )
@@ -1464,7 +1467,7 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'isActive',
     value: function isActive(value) {
-      console.log("isActive", value);
+      // console.log("isActive", value);
       return 'mt15 pt15 pb15 show ' + (value === this.state.selected ? 'greenBlueGradientLight' : '');
     }
   }, {

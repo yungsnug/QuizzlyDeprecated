@@ -102,7 +102,6 @@ import Modal from '../partials/Modal.js'
 export default class Courses extends React.Component {
   constructor(props) {
     super(props);
-    console.log("Courses props", this.props);
     this.state = {
       dropdownValue: "CSCI 201",
       courses: courses201,
@@ -112,6 +111,10 @@ export default class Courses extends React.Component {
         title: "Add Quiz"
       }
     };
+  }
+
+  closeModal() {
+    this.setState({showModal: false});
   }
 
   handleClick(num) {
@@ -132,23 +135,23 @@ export default class Courses extends React.Component {
     });
   }
 
-  addCourse() {
+  addCourseModal() {
+    var modalInfo = this.state.modalInfo;
+    modalInfo.title = "Add Course";
+    modalInfo.modalType = "ADD_COURSE";
     this.setState({
       showModal: true,
-      modalType: "ADD_COURSE",
-      title: "Add Course"
+      modalInfo: modalInfo
     });
   }
 
-  closeModal() {
-    this.setState({showModal: false});
-  }
-
-  addQuiz() {
+  addQuizModal() {
+    var modalInfo = this.state.modalInfo;
+    modalInfo.title = "Add Quiz";
+    modalInfo.modalType = "ADD_QUIZ";
     this.setState({
       showModal: true,
-      modalType: "ADD_QUIZ",
-      title: "Add Quiz"
+      modalInfo: modalInfo
     });
   }
 
@@ -172,10 +175,10 @@ export default class Courses extends React.Component {
           </select>
           {this.state.courses.map(function(course, i) {
             return (
-              <Course data={course} key={i} title={course} ref={'course' + i} footer={i} addQuiz={this.addQuiz.bind(this)} />
+              <Course data={course} key={i} title={course} ref={'course' + i} footer={i} addQuizModal={this.addQuizModal.bind(this)} />
             );
           }, this)}
-          <div className="addEntityButton" onClick={this.addCourse.bind(this)}>+</div>
+          <div className="addEntityButton" onClick={this.addCourseModal.bind(this)}>+</div>
         </div>
 
         {(() => {

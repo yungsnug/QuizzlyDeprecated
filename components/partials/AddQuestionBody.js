@@ -5,7 +5,17 @@ import React from 'react'
 export default class AddQuizBody extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props;
+    this.state = {
+      question: {
+        title: "",
+        placeholder: "Question...",
+        inputs: [
+          {letter: "A", text: "", placeholder: "Answer A..."},
+          {letter: "B", text: "", placeholder: "Answer B..."},
+          {letter: "C", text: "", placeholder: "Answer C..."}
+        ]
+      }
+    };
   }
 
   handleChange(i, event) {
@@ -29,13 +39,19 @@ export default class AddQuizBody extends React.Component {
   }
 
   showFreeResponse() {
-    var input = [];
-    input.push(this.state.question.inputs[0]);
-    this.setState({inputs: input});
+    var question = this.state.question;
+    question.inputs = [];
+    this.setState({question: question});
   }
 
   showMultipleChoice() {
-    this.setState(AddQuizBody.defaultProps);
+    var question = this.state.question;
+    question.inputs = [
+      {letter: "A", text: "", placeholder: "Answer A..."},
+      {letter: "B", text: "", placeholder: "Answer B..."},
+      {letter: "C", text: "", placeholder: "Answer C..."}
+    ];
+    this.setState({question: question});
   }
 
   render() {
@@ -79,21 +95,11 @@ export default class AddQuizBody extends React.Component {
             );
           })}
         </div>
-        <button onClick={this.props.addQuestionToQuiz.bind(this, me.state.question)}>Add</button>
+        <div className="pb20 pl20 pr20">
+          <div className="modalButton" onClick={this.props.addQuestionToQuiz.bind(this, this.state.question, this.props.quizIndex)}>ADD QUESTION</div>
+        </div>
         <div className="footerButton" onClick={this.addQuestion.bind(this)} >+</div>
       </div>
     );
   }
 }
-
-AddQuizBody.defaultProps = {
-  question: {
-    title: "",
-    placeholder: "Question...",
-    inputs: [
-      {letter: "A", text: "", placeholder: "Answer A..."},
-      {letter: "B", text: "", placeholder: "Answer B..."},
-      {letter: "C", text: "", placeholder: "Answer C..."}
-    ]
-  },
-};

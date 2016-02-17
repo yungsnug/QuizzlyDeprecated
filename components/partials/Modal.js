@@ -8,7 +8,6 @@ import AddQuestionBody from '../partials/AddQuestionBody.js'
 export default class Modal extends React.Component {
   constructor(props) {
     super(props);
-    console.log("Modal props", this.props);
 
     this.state = {
       showModal: props.showModal,
@@ -19,7 +18,6 @@ export default class Modal extends React.Component {
 
   render() {
     var body = {};
-    var quiz = {jack: "conner"};
     if(this.state.modalType == "ADD_COURSE") {
       body = <AddCourseBody />;
     } else if(this.state.modalType == "ADD_QUIZ") {
