@@ -10,11 +10,10 @@ export default class Modal extends React.Component {
     super(props);
     console.log("Modal props", this.props);
 
-    var modalInfo = this.props.modalInfo;
     this.state = {
-      showModal: this.props.showModal,
-      modalType: modalInfo.modalType,
-      title: modalInfo.title
+      showModal: props.showModal,
+      modalType: props.modalInfo.modalType,
+      title: props.modalInfo.title
     };
   }
 
@@ -26,7 +25,7 @@ export default class Modal extends React.Component {
     } else if(this.state.modalType == "ADD_QUIZ") {
       body = <AddQuizBody addQuizToCourse={this.props.addQuizToCourse.bind(this)} course={this.props.course} />;
     } else if(this.state.modalType == "ADD_QUESTION") {
-      body = <AddQuestionBody />;
+      body = <AddQuestionBody addQuestionToQuiz={this.props.addQuestionToQuiz.bind(this)} quizzes={this.props.quizzes} quizIndex={this.props.modalInfo.index} />;
     }
 
     return (

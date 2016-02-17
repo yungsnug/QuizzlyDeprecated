@@ -28,7 +28,7 @@ export default class extends React.Component {
               );
             }, this)}
           </div>
-          <div className="footerButton" onClick={this.props.addQuestion.bind(this, this.props.quiz.title)}>+</div>
+          <div className="footerButton" onClick={this.props.addQuestion.bind(this, this.props.quiz.title, this.props.key)}>+</div>
         </div>
       </div>
     );

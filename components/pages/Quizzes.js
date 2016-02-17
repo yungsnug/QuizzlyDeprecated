@@ -95,7 +95,7 @@ var quizzes104 = [
   }
 ];
 
-export default class extends React.Component {
+export default class Quizzes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -104,7 +104,8 @@ export default class extends React.Component {
       showModal: false,
       modalInfo: {
         modalType: "ADD_QUIZ",
-        title: "Add Quiz"
+        title: "Add Quiz",
+        index: -1
       }
     };
   }
@@ -137,11 +138,12 @@ export default class extends React.Component {
     });
   }
 
-  addQuestion(quizTitle) {
+  addQuestion(quizTitle, quizIndex) {
     console.log("this.props.quiz.title", quizTitle);
     var modalInfo = this.state.modalInfo;
     modalInfo.title = "Adding quiz question to: " + quizTitle;
     modalInfo.modalType = "ADD_QUESTION";
+    modalInfo.index = quizIndex;
     this.setState({
       showModal: true,
       modalInfo: modalInfo
@@ -168,6 +170,19 @@ export default class extends React.Component {
     this.closeModal();
   }
 
+  addQuestionToQuiz(question, quizIndex) {
+    var quizIndex = 0;
+    console.log("Adding question '" +  question.title + "' in quiz " + this.state.quizzes[quizIndex].title);
+    return;
+    var quizzes = this.state.quizzes;
+    var question = {
+      title: question.title
+    };
+    quizzes[quizIndex].questions.push(question);
+    this.setState({quizzes: quizzes});
+    this.closeModal();
+  }
+
   render() {
     return (
       <Layout>
@@ -189,9 +204,11 @@ export default class extends React.Component {
               <Modal
                 modalInfo={this.state.modalInfo}
                 course={this.state.dropdownValue}
+                quizzes={this.state.quizzes}
                 key={this.state.showModal}
                 closeModal={this.closeModal.bind(this)}
                 addQuizToCourse={this.addQuizToCourse.bind(this)}
+                addQuestionToQuiz={this.addQuestionToQuiz.bind(this)}
               />
             );
         })()}

@@ -133,7 +133,11 @@ export default class Courses extends React.Component {
   }
 
   addCourse() {
-    this.setState({showModal: true});
+    this.setState({
+      showModal: true,
+      modalType: "ADD_COURSE",
+      title: "Add Course"
+    });
   }
 
   closeModal() {
@@ -141,7 +145,6 @@ export default class Courses extends React.Component {
   }
 
   addQuiz() {
-    console.log("add quiz");
     this.setState({
       showModal: true,
       modalType: "ADD_QUIZ",
