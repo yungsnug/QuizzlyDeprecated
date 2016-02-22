@@ -10,10 +10,6 @@ export default class extends React.Component {
     };
   }
 
-  handleClick(num) {
-    console.log("Clicked: ", num);
-  }
-
   render() {
     var footer = this.props.footer == 0 ? <div className="footerButton" onClick={this.props.addQuizModal.bind(this)}>+</div> : null;
     return (
@@ -22,9 +18,8 @@ export default class extends React.Component {
           <div className="header">{this.props.title.title}</div>
           <div className="body">
             {this.props.data.quizzes.map(function(quiz, i) {
-              var boundClick = this.handleClick.bind(this, i);
               return (
-                <div onClick={boundClick} key={i} title={quiz} ref={'quiz' + i} className="item">{quiz.title}</div>
+                <div onClick={this.props.showMetricModal.bind(this, quiz)} key={i} title={quiz} ref={'quiz' + i} className="item">{quiz.title}</div>
               );
             }, this)}
           </div>

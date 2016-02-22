@@ -98,6 +98,7 @@ import React from 'react'
 import {Layout} from '../layout.js'
 import Course from '../partials/Course.js'
 import Modal from '../partials/Modal.js'
+import MetricModal from '../partials/MetricModal.js'
 
 export default class Courses extends React.Component {
   constructor(props) {
@@ -106,6 +107,7 @@ export default class Courses extends React.Component {
       dropdownValue: "CSCI 201",
       courses: courses201,
       showModal: false,
+      showMetricModal: false,
       modalInfo: {
         modalType: "ADD_QUIZ",
         title: "Add Quiz"
@@ -114,11 +116,21 @@ export default class Courses extends React.Component {
   }
 
   closeModal() {
-    this.setState({showModal: false});
+    this.setState({
+      showModal: false,
+      showMetricModal: false
+    });
   }
 
-  handleClick(num) {
-    console.log("handle click!", num);
+  showMetricModal(quiz) {
+    console.log("showMetricModal!", quiz);
+    var modalInfo = this.state.modalInfo;
+    modalInfo.title = quiz.title;
+    this.setState({
+      showModal: false,
+      showMetricModal: true,
+      modalInfo: modalInfo
+    });
   }
 
   handleDropdownChange(event) {
@@ -137,10 +149,11 @@ export default class Courses extends React.Component {
 
   addCourseModal() {
     var modalInfo = this.state.modalInfo;
-    modalInfo.title = "Add Course";
+    modalInfo
     modalInfo.modalType = "ADD_COURSE";
     this.setState({
       showModal: true,
+      showMetricModal: false,
       modalInfo: modalInfo
     });
   }
@@ -151,6 +164,7 @@ export default class Courses extends React.Component {
     modalInfo.modalType = "ADD_QUIZ";
     this.setState({
       showModal: true,
+      showMetricModal: false,
       modalInfo: modalInfo
     });
   }
@@ -175,7 +189,15 @@ export default class Courses extends React.Component {
           </select>
           {this.state.courses.map(function(course, i) {
             return (
-              <Course data={course} key={i} title={course} ref={'course' + i} footer={i} addQuizModal={this.addQuizModal.bind(this)} />
+              <Course
+                data={course}
+                key={i}
+                title={course}
+                ref={'course' + i}
+                footer={i}
+                addQuizModal={this.addQuizModal.bind(this)}
+                showMetricModal={this.showMetricModal.bind(this)}
+              />
             );
           }, this)}
           <div className="addEntityButton" onClick={this.addCourseModal.bind(this)}>+</div>
@@ -190,6 +212,17 @@ export default class Courses extends React.Component {
                 key={this.state.showModal}
                 closeModal={this.closeModal.bind(this)}
                 addQuizToCourse={this.addQuizToCourse.bind(this)}
+              />
+            );
+        })()}
+        {(() => {
+          if(this.state.showMetricModal)
+            return (
+              <MetricModal
+                modalInfo={this.state.modalInfo}
+                showMetricModal={this.state.showMetricModal}
+                key={this.state.showMetricModal}
+                closeModal={this.closeModal.bind(this)}
               />
             );
         })()}
