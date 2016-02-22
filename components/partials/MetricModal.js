@@ -56,10 +56,19 @@ export default class MetricModal extends React.Component {
   }
 
   componentDidMount() {
-    var ctx = document.getElementById("donutChart").getContext("2d");
+    var donutId = "donutChart";
+    var ctx = document.getElementById(donutId).getContext("2d");
     var donutChart = window.myLine = new Chart(ctx).Doughnut(donutDummyData, donutSettings);
 
     // ccDonutController.addDonutListener(this, donutChart, "creditCardDollarsChart");
+
+    document.getElementById(donutId).onclick = function (evt) {
+      var activePoints = donutChart.getSegmentsAtEvent(evt);
+      this.setState({
+        cardPercent: calculatePercent(activePoints[0].value, me.state.cardTotal),
+        cardTitle: activePoints[0].label
+      });
+    };
 
     this.setState({ donutChart: donutChart });
   }

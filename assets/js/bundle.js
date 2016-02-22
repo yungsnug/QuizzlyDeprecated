@@ -176,8 +176,8 @@ var Courses = (function (_React$Component) {
     key: "addCourseModal",
     value: function addCourseModal() {
       var modalInfo = this.state.modalInfo;
-      modalInfo;
       modalInfo.modalType = "ADD_COURSE";
+      modalInfo.title = "Add Course";
       this.setState({
         showModal: true,
         showMetricModal: false,
@@ -827,20 +827,162 @@ var AddCourseBody = (function (_React$Component) {
     _classCallCheck(this, AddCourseBody);
 
     _get(Object.getPrototypeOf(AddCourseBody.prototype), "constructor", this).call(this, props);
-
     this.state = {
-      name: "conner"
+      isAddCourse: false,
+      course: {
+        title: "",
+        placeholder: "Course...",
+        sections: [{ title: "", placeholder: "Section..." }]
+      }
     };
   }
 
   _createClass(AddCourseBody, [{
+    key: "handleChange",
+    value: function handleChange(i, event) {
+      var me = this;
+      var course = this.state.course;
+      if (i == 'course') {
+        course.title = event.target.value;
+      } else {
+        course.sections[i].title = event.target.value;
+      }
+
+      this.setState({ course: course });
+    }
+  }, {
+    key: "addSection",
+    value: function addSection() {
+      var sections = this.state.course.sections;
+      var section = { title: "", placeholder: "Section..." };
+      sections.push(section);
+      this.setState({ sections: sections });
+    }
+  }, {
+    key: "showAddCourse",
+    value: function showAddCourse() {
+      if (this.state.isAddCourse) return;
+
+      var course = {
+        title: "",
+        placeholder: "Course...",
+        sections: []
+      };
+      this.setState({
+        isAddCourse: true,
+        course: course
+      });
+    }
+  }, {
+    key: "showAddSection",
+    value: function showAddSection() {
+      if (!this.state.isAddCourse) return;
+
+      var course = {
+        title: "",
+        placeholder: "",
+        sections: [{ title: "", placeholder: "Section..." }]
+      };
+      this.setState({
+        isAddCourse: false,
+        course: course
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var me = this;
+      var addButton;
+      var footerButton;
+      var courseInput;
+
+      if (this.state.isAddCourse) {
+        courseInput = _react2["default"].createElement(
+          "div",
+          { className: "flex mb20 flexVertical" },
+          _react2["default"].createElement("input", {
+            type: "text",
+            className: "addCourseInput",
+            placeholder: this.state.course.placeholder,
+            value: this.state.course.title,
+            onChange: this.handleChange.bind(this, 'course')
+          })
+        );
+        addButton = _react2["default"].createElement(
+          "div",
+          { className: "modalButton" },
+          "ADD COURSE"
+        );
+        footerButton = _react2["default"].createElement(
+          "div",
+          { className: "footerButton", onClick: this.addSection.bind(this) },
+          "+"
+        );
+      } else {
+        courseInput = {};
+        addButton = _react2["default"].createElement(
+          "div",
+          { className: "modalButton" },
+          "ADD SECTION"
+        );
+        footerButton = {};
+      }
+
       return _react2["default"].createElement(
         "div",
         { id: "addCourseBody" },
-        "This is addCourseBody ",
-        this.state.name
+        _react2["default"].createElement(
+          "div",
+          { className: "row" },
+          _react2["default"].createElement(
+            "div",
+            { className: "six columns p20 pr10" },
+            _react2["default"].createElement(
+              "div",
+              { className: "modalButton", onClick: this.showAddCourse.bind(this) },
+              "ADD COURSE"
+            )
+          ),
+          _react2["default"].createElement(
+            "div",
+            { className: "six columns p20 pl10" },
+            _react2["default"].createElement(
+              "div",
+              { className: "modalButton", onClick: this.showAddSection.bind(this) },
+              "ADD SECTION"
+            )
+          )
+        ),
+        _react2["default"].createElement(
+          "div",
+          { className: "pl20 pr20" },
+          courseInput,
+          this.state.course.sections.map(function (section, i) {
+            return _react2["default"].createElement(
+              "div",
+              { className: "flex mb20 flexVertical" },
+              _react2["default"].createElement("input", {
+                type: "text",
+                className: "addCourseInput",
+                placeholder: section.placeholder,
+                value: section.title,
+                onChange: me.handleChange.bind(me, i),
+                key: i
+              }),
+              _react2["default"].createElement(
+                "div",
+                { className: "plusButton ml15" },
+                "+"
+              )
+            );
+          })
+        ),
+        _react2["default"].createElement(
+          "div",
+          { className: "pb20 pl20 pr20" },
+          addButton
+        ),
+        footerButton
       );
     }
   }]);
@@ -1325,10 +1467,19 @@ var MetricModal = (function (_React$Component) {
   _createClass(MetricModal, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var ctx = document.getElementById("donutChart").getContext("2d");
+      var donutId = "donutChart";
+      var ctx = document.getElementById(donutId).getContext("2d");
       var donutChart = window.myLine = new Chart(ctx).Doughnut(donutDummyData, donutSettings);
 
       // ccDonutController.addDonutListener(this, donutChart, "creditCardDollarsChart");
+
+      document.getElementById(donutId).onclick = function (evt) {
+        var activePoints = donutChart.getSegmentsAtEvent(evt);
+        this.setState({
+          cardPercent: calculatePercent(activePoints[0].value, me.state.cardTotal),
+          cardTitle: activePoints[0].label
+        });
+      };
 
       this.setState({ donutChart: donutChart });
     }

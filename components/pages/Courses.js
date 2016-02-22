@@ -149,8 +149,8 @@ export default class Courses extends React.Component {
 
   addCourseModal() {
     var modalInfo = this.state.modalInfo;
-    modalInfo
     modalInfo.modalType = "ADD_COURSE";
+    modalInfo.title = "Add Course";
     this.setState({
       showModal: true,
       showMetricModal: false,
