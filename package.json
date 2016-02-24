@@ -29,7 +29,9 @@
     "sails": "~0.11.0",
     "sails-disk": "~0.10.0",
     "sails-hook-babel": "^5.0.1",
-    "sails-react-store": "^1.0.9"
+    "sails-memory": "^0.10.6",
+    "sails-react-store": "^1.0.9",
+    "waterline": "^0.11.0"
   },
   "scripts": {
     "start": "node app.js",
