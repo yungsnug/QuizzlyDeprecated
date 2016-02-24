@@ -14,6 +14,8 @@ module.exports = {
       autoIncrement: true
     },
 
+    facultyId : { type: 'string' },
+
     name : { type: 'string' },
 
     email : { type: 'string' },
