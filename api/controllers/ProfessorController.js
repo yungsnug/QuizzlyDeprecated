@@ -12,17 +12,17 @@ module.exports = {
   /**
    * `ProfessorController.create()`
    */
-	create: function(req, res) {
-	  var params = req.params.all();
-		Professor.create({
-	    name: params.name,
-			email: params.email
-	  }).exec(function createCB(err, created) {
-	    return res.json({
-	      notice: 'Created professor with name ' + created.name + " and email " + created.email
-	    });
-	  });
-	},
+  create: function(req, res) {
+    var params = req.params.all();
+    Professor.create({
+      name: params.name,
+      email: params.email
+    }).exec(function createCB(err, created) {
+      return res.json({
+        notice: 'Created professor with name ' + created.name + " and email " + created.email
+      });
+    });
+  },
 
 
 /**
