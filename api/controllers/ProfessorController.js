@@ -6,9 +6,6 @@
  */
 
 module.exports = {
-
-
-
   /**
    * `ProfessorController.create()`
    */
@@ -16,28 +13,54 @@ module.exports = {
     var params = req.params.all();
     Professor.create({
       name: params.name,
-      email: params.email
-    }).exec(function createCB(err, created) {
+      email: params.email,
+      facultyId: params.facultyId
+    }).exec(function createCB(err, professor) {
       return res.json({
-        notice: 'Created professor with name ' + created.name + " and email " + created.email
+        notice: 'Created professor with name ' + professor.name + " and email " + professor.email
       });
     });
   },
 
+  destroy: function() {
+    Book.destroy({
+      id: 4
+    }).exec(function (err){
+      if (err) {
+        return res.negotiate(err);
+      }
+      sails.log('Deleted book with `id: 4`, if it existed.');
+      return res.ok();
+    });
+  },
 
-/**
-   * `ProfessorController.getQuizzes()`
-*/
-getQuizzes: function (req, res) {
-    return res.json({
-      todo: 'show() is not implemented yet!'
+  findByEmail: function(req, res) {
+    var params = req.params.all();
+    Professor.findOne({email:params.email}).exec(function (err, professor){
+      if (err) {
+        return res.negotiate(err);
+      }
+      return res.json(professor);
+    });
+  },
+
+  /**
+     * `ProfessorController.getQuizzes()`
+  */
+  getQuizzes: function (req, res) {
+    Professor.find({name:'Finn'}).exec(function (err, usersNamedFinn){
+      if (err) {
+        return res.negotiate(err);
+      }
+      sails.log('Wow, there are %d users named Finn.  Check it out:', usersNamedFinn.length, usersNamedFinn);
+      return res.json(usersNamedFinn);
     });
   },
 
   /**
    * `ProfessorController.getQuiz()`
-*/
-getQuiz: function (req, res) {
+  */
+  getQuiz: function (req, res) {
     return res.json({
       todo: 'show() is not implemented yet!'
     });
@@ -45,26 +68,24 @@ getQuiz: function (req, res) {
 
   /**
    * `ProfessorController.getName()`
-*/
-getName: function (req, res) {
-    return res.json({
-      todo: 'show() is not implemented yet!'
-    });
+   */
+  getName: function (req, res) {
+    var professor = this.findOne(req, res);
+    return res.json(professor.name);
   },
 
   /**
    * `ProfessorController.getEmail()`
-*/
-getEmail: function (req, res) {
-    return res.json({
-      todo: 'show() is not implemented yet!'
-    });
+  */
+  getEmail: function (req, res) {
+    var professor = this.findOne(req, res);
+    return res.json(professor.email);
   },
 
   /**
    * `ProfessorController.setName()`
-*/
-setName: function (req, res) {
+  */
+  setName: function (req, res) {
     return res.json({
       todo: 'show() is not implemented yet!'
     });
@@ -72,8 +93,8 @@ setName: function (req, res) {
 
   /**
    * `ProfessorController.setEmail()`
-*/
-setEmail: function (req, res) {
+  */
+  setEmail: function (req, res) {
     return res.json({
       todo: 'show() is not implemented yet!'
     });
@@ -81,8 +102,8 @@ setEmail: function (req, res) {
 
   /**
    * `ProfessorController.getAnswers()`
-*/
-getAnswers: function (req, res) {
+  */
+  getAnswers: function (req, res) {
     return res.json({
       todo: 'show() is not implemented yet!'
     });
@@ -90,8 +111,8 @@ getAnswers: function (req, res) {
 
   /**
    * `ProfessorController.getAnswer()`
-*/
-getAnswer: function (req, res) {
+  */
+  getAnswer: function (req, res) {
     return res.json({
       todo: 'show() is not implemented yet!'
     });
@@ -99,41 +120,10 @@ getAnswer: function (req, res) {
 
   /**
    * `ProfessorController.getProfessorByEmail()`
-*/
-getProfessorByEmail: function (req, res) {
+  */
+  getProfessorByEmail: function (req, res) {
     return res.json({
       todo: 'show() is not implemented yet!'
     });
   },
-
-
-
-  /**
-   * `ProfessorController.show()`
-   */
-  show: function (req, res) {
-    return res.json({
-      todo: 'show() is not implemented yet!'
-    });
-  },
-
-
-  /**
-   * `ProfessorController.edit()`
-   */
-  edit: function (req, res) {
-    return res.json({
-      todo: 'edit() is not implemented yet!'
-    });
-  },
-
-
-  /**
-   * `ProfessorController.delete()`
-   */
-  delete: function (req, res) {
-    return res.json({
-      todo: 'delete() is not implemented yet!'
-    });
-  }
 };
