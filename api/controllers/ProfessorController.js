@@ -6,42 +6,134 @@
  */
 
 module.exports = {
+
+
+
   /**
    * `ProfessorController.create()`
    */
-  create: function (req, res) {
+	create: function(req, res) {
+	  var params = req.params.all();
+		Professor.create({
+	    name: params.name,
+			email: params.email
+	  }).exec(function createCB(err, created) {
+	    return res.json({
+	      notice: 'Created professor with name ' + created.name + " and email " + created.email
+	    });
+	  });
+	},
+
+
+/**
+   * `ProfessorController.getQuizzes()`
+*/
+getQuizzes: function (req, res) {
     return res.json({
-      todo: 'create() is not implemented yet!'
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.getQuiz()`
+*/
+getQuiz: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.getName()`
+*/
+getName: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.getEmail()`
+*/
+getEmail: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.setName()`
+*/
+setName: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.setEmail()`
+*/
+setEmail: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.getAnswers()`
+*/
+getAnswers: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.getAnswer()`
+*/
+getAnswer: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+  /**
+   * `ProfessorController.getProfessorByEmail()`
+*/
+getProfessorByEmail: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
+    });
+  },
+
+
+
+  /**
+   * `ProfessorController.show()`
+   */
+  show: function (req, res) {
+    return res.json({
+      todo: 'show() is not implemented yet!'
     });
   },
 
 
   /**
-   * `ProfessorController.find()`
+   * `ProfessorController.edit()`
    */
-  find: function (req, res) {
+  edit: function (req, res) {
     return res.json({
-      todo: 'find() is not implemented yet!'
+      todo: 'edit() is not implemented yet!'
     });
   },
 
 
   /**
-   * `ProfessorController.update()`
+   * `ProfessorController.delete()`
    */
-  update: function (req, res) {
+  delete: function (req, res) {
     return res.json({
-      todo: 'update() is not implemented yet!'
-    });
-  },
-
-
-  /**
-   * `ProfessorController.destroy()`
-   */
-  destroy: function (req, res) {
-    return res.json({
-      todo: 'destroy() is not implemented yet!'
+      todo: 'delete() is not implemented yet!'
     });
   }
 };
