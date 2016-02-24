@@ -6,6 +6,7 @@ import {Header} from './partials/Header.js'
 
 export class Layout {
   render() {
+    var me = this;
     return (
       <div id="quizzlyApp">
         <Sidebar />
@@ -15,3 +16,7 @@ export class Layout {
     )
   }
 }
+
+// {React.Children.map(me.props.children, function (child) {
+//   return React.cloneElement(child, { xxx: "jackson polluck" });
+// })}

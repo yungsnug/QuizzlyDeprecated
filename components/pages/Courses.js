@@ -105,6 +105,7 @@ export default class Courses extends React.Component {
     super(props);
     this.state = {
       dropdownValue: "CSCI 201",
+      semesterDropdownValue: "Fall 2016",
       courses: courses201,
       showModal: false,
       showMetricModal: false,
@@ -147,6 +148,12 @@ export default class Courses extends React.Component {
     });
   }
 
+  handleSemesterDropdownChange(event) {
+    this.setState({
+      semesterDropdownValue: event.target.value
+    });
+  }
+
   addCourseModal() {
     var modalInfo = this.state.modalInfo;
     modalInfo.modalType = "ADD_COURSE";
@@ -183,9 +190,15 @@ export default class Courses extends React.Component {
     return (
       <Layout>
         <div id="courses" className="quizzlyContent">
-          <select value={this.state.dropdownValue} className="mainDropdown" onChange={this.handleDropdownChange.bind(this)}>
+          <select value={this.state.dropdownValue} className="dropdown mainDropdown" onChange={this.handleDropdownChange.bind(this)}>
             <option value="CSCI 201">CSCI 201</option>
             <option value="CSCI 104">CSCI 104</option>
+          </select>
+          <select value={this.state.semesterDropdownValue} className="dropdown semesterDropdown" onChange={this.handleSemesterDropdownChange.bind(this)}>
+            <option value="CSCI 201">Fall 2016</option>
+            <option value="CSCI 104">Summer 2015</option>
+            <option value="CSCI 104">Spring 2015</option>
+            <option value="CSCI 104">Fall 2015</option>
           </select>
           {this.state.courses.map(function(course, i) {
             return (

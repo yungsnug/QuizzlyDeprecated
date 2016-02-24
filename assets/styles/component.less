@@ -186,13 +186,25 @@
   height: 44px;
 }
 
-.mainDropdown {
-  position: absolute;
-  top: 9px;
+.dropdown {
   background-color: white;
   height: 39px;
-  width: 160px;
   .p;
+}
+
+.mainDropdown {
+  .dropdown;
+  position: absolute;
+  top: 9px;
+  width: 160px;
+}
+
+.semesterDropdown {
+  .dropdown;
+  position: absolute;
+  top: 9px;
+  margin-left: 170px;
+  width: 160px;
 }
 
 #modalContainer {
@@ -262,7 +274,7 @@
   border: none;
 }
 
-.plusButton {
+.greenButton {
   .alignC;
   .pointer;
   .round;
@@ -270,9 +282,14 @@
   .borderTop;
   .lightGreenBackground;
   .p10;
-  font-weight: 500;
-  width: 26px;
+  flex-shrink: 0;
   &:hover {
     background-color: darken(@lightGreen, 5%);
   }
+}
+
+.plusButton {
+  .greenButton;
+  font-weight: 500;
+  width: 26px;
 }

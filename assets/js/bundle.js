@@ -35,9 +35,14 @@ var Layout = (function () {
     _classCallCheck(this, Layout);
   }
 
+  // {React.Children.map(me.props.children, function (child) {
+  //   return React.cloneElement(child, { xxx: "jackson polluck" });
+  // })}
+
   _createClass(Layout, [{
     key: 'render',
     value: function render() {
+      var me = this;
       return _react2['default'].createElement(
         'div',
         { id: 'quizzlyApp' },
@@ -127,6 +132,7 @@ var Courses = (function (_React$Component) {
     _get(Object.getPrototypeOf(Courses.prototype), "constructor", this).call(this, props);
     this.state = {
       dropdownValue: "CSCI 201",
+      semesterDropdownValue: "Fall 2016",
       courses: courses201,
       showModal: false,
       showMetricModal: false,
@@ -170,6 +176,13 @@ var Courses = (function (_React$Component) {
       this.setState({
         dropdownValue: event.target.value,
         courses: courses
+      });
+    }
+  }, {
+    key: "handleSemesterDropdownChange",
+    value: function handleSemesterDropdownChange(event) {
+      this.setState({
+        semesterDropdownValue: event.target.value
       });
     }
   }, {
@@ -220,7 +233,7 @@ var Courses = (function (_React$Component) {
           { id: "courses", className: "quizzlyContent" },
           _react2["default"].createElement(
             "select",
-            { value: this.state.dropdownValue, className: "mainDropdown", onChange: this.handleDropdownChange.bind(this) },
+            { value: this.state.dropdownValue, className: "dropdown mainDropdown", onChange: this.handleDropdownChange.bind(this) },
             _react2["default"].createElement(
               "option",
               { value: "CSCI 201" },
@@ -230,6 +243,30 @@ var Courses = (function (_React$Component) {
               "option",
               { value: "CSCI 104" },
               "CSCI 104"
+            )
+          ),
+          _react2["default"].createElement(
+            "select",
+            { value: this.state.semesterDropdownValue, className: "dropdown semesterDropdown", onChange: this.handleSemesterDropdownChange.bind(this) },
+            _react2["default"].createElement(
+              "option",
+              { value: "CSCI 201" },
+              "Fall 2016"
+            ),
+            _react2["default"].createElement(
+              "option",
+              { value: "CSCI 104" },
+              "Summer 2015"
+            ),
+            _react2["default"].createElement(
+              "option",
+              { value: "CSCI 104" },
+              "Spring 2015"
+            ),
+            _react2["default"].createElement(
+              "option",
+              { value: "CSCI 104" },
+              "Fall 2015"
             )
           ),
           this.state.courses.map(function (course, i) {
@@ -495,6 +532,7 @@ var Quizzes = (function (_React$Component) {
     _get(Object.getPrototypeOf(Quizzes.prototype), 'constructor', this).call(this, props);
     this.state = {
       dropdownValue: "CSCI 201",
+      semesterDropdownValue: "Fall 2016",
       quizzes: quizzes201,
       showModal: false,
       modalInfo: {
@@ -523,6 +561,13 @@ var Quizzes = (function (_React$Component) {
       this.setState({
         dropdownValue: event.target.value,
         quizzes: quizzes
+      });
+    }
+  }, {
+    key: 'handleSemesterDropdownChange',
+    value: function handleSemesterDropdownChange(event) {
+      this.setState({
+        semesterDropdownValue: event.target.value
       });
     }
   }, {
@@ -593,7 +638,7 @@ var Quizzes = (function (_React$Component) {
           { id: 'quizzes', className: 'p20 quizzlyContent' },
           _react2['default'].createElement(
             'select',
-            { value: this.state.dropdownValue, className: 'mainDropdown', onChange: this.handleDropdownChange.bind(this) },
+            { value: this.state.dropdownValue, className: 'dropdown mainDropdown', onChange: this.handleDropdownChange.bind(this) },
             _react2['default'].createElement(
               'option',
               { value: 'CSCI 201' },
@@ -603,6 +648,30 @@ var Quizzes = (function (_React$Component) {
               'option',
               { value: 'CSCI 104' },
               'CSCI 104'
+            )
+          ),
+          _react2['default'].createElement(
+            'select',
+            { value: this.state.semesterDropdownValue, className: 'dropdown semesterDropdown', onChange: this.handleSemesterDropdownChange.bind(this) },
+            _react2['default'].createElement(
+              'option',
+              { value: 'CSCI 201' },
+              'Fall 2016'
+            ),
+            _react2['default'].createElement(
+              'option',
+              { value: 'CSCI 104' },
+              'Summer 2015'
+            ),
+            _react2['default'].createElement(
+              'option',
+              { value: 'CSCI 104' },
+              'Spring 2015'
+            ),
+            _react2['default'].createElement(
+              'option',
+              { value: 'CSCI 104' },
+              'Fall 2015'
             )
           ),
           this.state.quizzes.map(function (quiz, i) {
@@ -939,7 +1008,7 @@ var AddCourseBody = (function (_React$Component) {
             { className: "six columns p20 pr10" },
             _react2["default"].createElement(
               "div",
-              { className: "modalButton", onClick: this.showAddCourse.bind(this) },
+              { className: "modalButton " + (this.state.isAddCourse ? "" : "opacity40"), onClick: this.showAddCourse.bind(this) },
               "ADD COURSE"
             )
           ),
@@ -948,7 +1017,7 @@ var AddCourseBody = (function (_React$Component) {
             { className: "six columns p20 pl10" },
             _react2["default"].createElement(
               "div",
-              { className: "modalButton", onClick: this.showAddSection.bind(this) },
+              { className: "modalButton " + (this.state.isAddCourse ? "opacity40" : ""), onClick: this.showAddSection.bind(this) },
               "ADD SECTION"
             )
           )
@@ -971,8 +1040,8 @@ var AddCourseBody = (function (_React$Component) {
               }),
               _react2["default"].createElement(
                 "div",
-                { className: "plusButton ml15" },
-                "+"
+                { className: "greenButton ml15" },
+                "Add Students"
               )
             );
           })
@@ -1022,6 +1091,7 @@ var AddQuizBody = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(AddQuizBody.prototype), "constructor", this).call(this, props);
     this.state = {
+      isAddFreeResponse: false,
       question: {
         title: "",
         placeholder: "Question...",
@@ -1057,14 +1127,20 @@ var AddQuizBody = (function (_React$Component) {
     value: function showFreeResponse() {
       var question = this.state.question;
       question.inputs = [];
-      this.setState({ question: question });
+      this.setState({
+        isAddFreeResponse: true,
+        question: question
+      });
     }
   }, {
     key: "showMultipleChoice",
     value: function showMultipleChoice() {
       var question = this.state.question;
       question.inputs = [{ letter: "A", text: "", placeholder: "Answer A..." }, { letter: "B", text: "", placeholder: "Answer B..." }, { letter: "C", text: "", placeholder: "Answer C..." }];
-      this.setState({ question: question });
+      this.setState({
+        isAddFreeResponse: false,
+        question: question
+      });
     }
   }, {
     key: "render",
@@ -1092,7 +1168,7 @@ var AddQuizBody = (function (_React$Component) {
             { className: "six columns p20 pr10" },
             _react2["default"].createElement(
               "div",
-              { className: "modalButton", onClick: this.showMultipleChoice.bind(this) },
+              { className: "modalButton " + (this.state.isAddFreeResponse ? "opacity40" : ""), onClick: this.showMultipleChoice.bind(this) },
               "MULTIPLE CHOICE"
             )
           ),
@@ -1101,7 +1177,7 @@ var AddQuizBody = (function (_React$Component) {
             { className: "six columns p20 pl10" },
             _react2["default"].createElement(
               "div",
-              { className: "modalButton", onClick: this.showFreeResponse.bind(this) },
+              { className: "modalButton " + (this.state.isAddFreeResponse ? "" : "opacity40"), onClick: this.showFreeResponse.bind(this) },
               "FREE RESPONSE"
             )
           )

@@ -6,6 +6,7 @@ export default class AddQuizBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isAddFreeResponse: false,
       question: {
         title: "",
         placeholder: "Question...",
@@ -41,7 +42,10 @@ export default class AddQuizBody extends React.Component {
   showFreeResponse() {
     var question = this.state.question;
     question.inputs = [];
-    this.setState({question: question});
+    this.setState({
+      isAddFreeResponse: true,
+      question: question
+    });
   }
 
   showMultipleChoice() {
@@ -51,7 +55,10 @@ export default class AddQuizBody extends React.Component {
       {letter: "B", text: "", placeholder: "Answer B..."},
       {letter: "C", text: "", placeholder: "Answer C..."}
     ];
-    this.setState({question: question});
+    this.setState({
+      isAddFreeResponse: false,
+      question: question
+    });
   }
 
   render() {
@@ -71,10 +78,10 @@ export default class AddQuizBody extends React.Component {
       <div id="addQuestionBody">
         <div className="row">
           <div className="six columns p20 pr10">
-            <div className="modalButton" onClick={this.showMultipleChoice.bind(this)}>MULTIPLE CHOICE</div>
+            <div className={"modalButton " + (this.state.isAddFreeResponse ? "opacity40" : "")} onClick={this.showMultipleChoice.bind(this)}>MULTIPLE CHOICE</div>
           </div>
           <div className="six columns p20 pl10">
-            <div className="modalButton" onClick={this.showFreeResponse.bind(this)}>FREE RESPONSE</div>
+            <div className={"modalButton " + (this.state.isAddFreeResponse ? "" : "opacity40")} onClick={this.showFreeResponse.bind(this)}>FREE RESPONSE</div>
           </div>
         </div>
         <div className="pl20 pr20">

@@ -100,6 +100,7 @@ export default class Quizzes extends React.Component {
     super(props);
     this.state = {
       dropdownValue: "CSCI 201",
+      semesterDropdownValue: "Fall 2016",
       quizzes: quizzes201,
       showModal: false,
       modalInfo: {
@@ -125,6 +126,12 @@ export default class Quizzes extends React.Component {
     this.setState({
       dropdownValue: event.target.value,
       quizzes: quizzes
+    });
+  }
+
+  handleSemesterDropdownChange(event) {
+    this.setState({
+      semesterDropdownValue: event.target.value
     });
   }
 
@@ -182,9 +189,15 @@ export default class Quizzes extends React.Component {
     return (
       <Layout>
         <div id="quizzes" className="p20 quizzlyContent">
-          <select value={this.state.dropdownValue} className="mainDropdown" onChange={this.handleDropdownChange.bind(this)}>
+          <select value={this.state.dropdownValue} className="dropdown mainDropdown" onChange={this.handleDropdownChange.bind(this)}>
             <option value="CSCI 201">CSCI 201</option>
             <option value="CSCI 104">CSCI 104</option>
+          </select>
+          <select value={this.state.semesterDropdownValue} className="dropdown semesterDropdown" onChange={this.handleSemesterDropdownChange.bind(this)}>
+            <option value="CSCI 201">Fall 2016</option>
+            <option value="CSCI 104">Summer 2015</option>
+            <option value="CSCI 104">Spring 2015</option>
+            <option value="CSCI 104">Fall 2015</option>
           </select>
           {this.state.quizzes.map(function(quiz, i) {
             return (
