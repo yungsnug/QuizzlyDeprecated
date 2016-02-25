@@ -148,12 +148,13 @@ var Courses = (function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       $.ajax({
-        type: 'get',
-        url: "/professor/find",
-        // data: {id: 1},
+        type: 'post',
+        url: "/course/find",
+        data: { professor: 1 },
         dataType: 'json'
-      }).done(function (professor) {
-        console.log("professor", professor);
+      }).done(function (courses) {
+        console.log("courses", courses);
+        professor.course;
       }).fail(function (error) {
         console.log("fail", error);
       });
