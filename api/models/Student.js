@@ -37,7 +37,7 @@ module.exports = {
     },
 
     // Methods
-    getFullName: function () {
+    getFullName: function() {
       return this.firstName + ' ' + this.lastName;
     }
   }

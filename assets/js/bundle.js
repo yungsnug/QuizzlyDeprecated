@@ -130,6 +130,7 @@ var Courses = (function (_React$Component) {
     _classCallCheck(this, Courses);
 
     _get(Object.getPrototypeOf(Courses.prototype), "constructor", this).call(this, props);
+
     this.state = {
       dropdownValue: "CSCI 201",
       semesterDropdownValue: "Fall 2016",
@@ -144,6 +145,20 @@ var Courses = (function (_React$Component) {
   }
 
   _createClass(Courses, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      $.ajax({
+        type: 'get',
+        url: "/professor/find",
+        // data: {id: 1},
+        dataType: 'json'
+      }).done(function (professor) {
+        console.log("professor", professor);
+      }).fail(function (error) {
+        console.log("fail", error);
+      });
+    }
+  }, {
     key: "closeModal",
     value: function closeModal() {
       this.setState({

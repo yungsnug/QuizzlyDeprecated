@@ -103,6 +103,7 @@ import MetricModal from '../partials/MetricModal.js'
 export default class Courses extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       dropdownValue: "CSCI 201",
       semesterDropdownValue: "Fall 2016",
@@ -114,6 +115,19 @@ export default class Courses extends React.Component {
         title: "Add Quiz"
       }
     };
+  }
+
+  componentDidMount() {
+    $.ajax({
+      type: 'get',
+      url: "/professor/find",
+      data: {id: 1},
+      dataType: 'json'
+    }).done(function(professor) {
+      console.log("professor", professor);
+    }).fail(function(error) {
+      console.log("fail", error);
+    });
   }
 
   closeModal() {

@@ -33,8 +33,11 @@ module.exports = {
     courses: {
       collection: 'course',
       via: 'professor'
-    }
+    },
 
     // Methods
+    getFullName: function() {
+      return this.firstName + ' ' + this.lastName;
+    }
   }
 };
