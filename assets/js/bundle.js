@@ -95,33 +95,19 @@ var _partialsMetricModalJs = require('../partials/MetricModal.js');
 
 var _partialsMetricModalJs2 = _interopRequireDefault(_partialsMetricModalJs);
 
-var courses201 = [{
+var course201 = {
   title: "CSCI 201",
   quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }, { title: "Week 5" }, { title: "Week 6" }, { title: "Week 7" }, { title: "Week 8" }]
-}, {
-  title: "67558",
-  quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }, { title: "Week 5" }, { title: "Week 6" }, { title: "Week 7" }, { title: "Week 8" }]
-}, {
-  title: "49939",
-  quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }, { title: "Week 5" }, { title: "Week 6" }, { title: "Week 7" }, { title: "Week 8" }]
-}, {
-  title: "12283",
-  quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }, { title: "Week 5" }, { title: "Week 6" }, { title: "Week 7" }, { title: "Week 8" }]
-}];
+};
 
-var courses104 = [{
+var sections201 = [{ title: "67558" }, { title: "49939" }, { title: "12283" }];
+
+var course104 = {
   title: "CSCI 104",
   quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }]
-}, {
-  title: "98857",
-  quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }]
-}, {
-  title: "79988",
-  quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }]
-}, {
-  title: "09932",
-  quizzes: [{ title: "Week 1" }, { title: "Week 2" }, { title: "Week 3" }, { title: "Week 4" }]
-}];
+};
+
+var sections104 = [{ title: "98857" }, { title: "79988" }, { title: "09932" }];
 
 var Courses = (function (_React$Component) {
   _inherits(Courses, _React$Component);
@@ -134,7 +120,8 @@ var Courses = (function (_React$Component) {
     this.state = {
       dropdownValue: "CSCI 201",
       semesterDropdownValue: "Fall 2016",
-      courses: courses201,
+      course: course201,
+      sections: sections201,
       showModal: false,
       showMetricModal: false,
       modalInfo: {
@@ -148,18 +135,19 @@ var Courses = (function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var me = this;
-      $.ajax({
-        type: 'post',
-        url: "/course/find",
-        data: { professor: 1 },
-        dataType: 'json'
-      }).done(function (courses) {
-        console.log("courses", courses);
+
+      $.when($.post("/course/find", { course: 1 }), $.post("/section/find", {
+        professor: 1,
+        course: 1
+      })).then(function (course, sections) {
+        console.log("course", course[0]);
+        console.log("sections", sections[0]);
+
+        if (course[0].length == 0) return; // if there are no courses, then there are no sections
         me.setState({
-          courses: courses
+          course: course,
+          sections: sections
         });
-      }).fail(function (error) {
-        console.log("fail", error);
       });
     }
   }, {
@@ -185,16 +173,20 @@ var Courses = (function (_React$Component) {
   }, {
     key: "handleDropdownChange",
     value: function handleDropdownChange(event) {
-      var courses = {};
+      var course = {};
+      var sections = [];
       if (event.target.value === "CSCI 104") {
-        courses = courses104;
+        course = course104;
+        sections = sections104;
       } else if (event.target.value === "CSCI 201") {
-        courses = courses201;
+        course = course201;
+        sections = sections201;
       }
 
       this.setState({
         dropdownValue: event.target.value,
-        courses: courses
+        course: course,
+        sections: sections
       });
     }
   }, {
@@ -232,11 +224,9 @@ var Courses = (function (_React$Component) {
     key: "addQuizToCourse",
     value: function addQuizToCourse(quiz) {
       console.log("Adding quiz '" + quiz.title + "' in course " + this.state.dropdownValue);
-      var courses = this.state.courses;
-      for (var i = 0; i < courses.length; ++i) {
-        courses[i].quizzes.push({ title: quiz.title });
-      }
-      this.setState({ courses: courses });
+      var course = this.state.course;
+      course.quizzes.push({ title: quiz.title });
+      this.setState({ course: course });
       this.closeModal();
     }
   }, {
@@ -288,14 +278,20 @@ var Courses = (function (_React$Component) {
               "Fall 2015"
             )
           ),
-          this.state.courses.map(function (course, i) {
+          _react2["default"].createElement(_partialsCourseJs2["default"], {
+            course: this.state.course,
+            isCourse: true,
+            ref: 'course',
+            addQuizModal: this.addQuizModal.bind(this),
+            showMetricModal: this.showMetricModal.bind(this)
+          }),
+          this.state.sections.map(function (section, i) {
             return _react2["default"].createElement(_partialsCourseJs2["default"], {
-              data: course,
+              section: section,
+              course: this.state.course,
+              isCourse: false,
               key: i,
-              title: course,
-              ref: 'course' + i,
-              footer: i,
-              addQuizModal: this.addQuizModal.bind(this),
+              ref: 'section' + i,
               showMetricModal: this.showMetricModal.bind(this)
             });
           }, this),
@@ -1176,6 +1172,12 @@ var AddQuizBody = (function (_React$Component) {
           onChange: this.handleChange.bind(this, 'question')
         })
       );
+
+      var footer = this.state.isAddFreeResponse ? null : _react2["default"].createElement(
+        "div",
+        { className: "footerButton", onClick: this.addQuestion.bind(this) },
+        "+"
+      );
       return _react2["default"].createElement(
         "div",
         { id: "addQuestionBody" },
@@ -1235,11 +1237,7 @@ var AddQuizBody = (function (_React$Component) {
             "ADD QUESTION"
           )
         ),
-        _react2["default"].createElement(
-          "div",
-          { className: "footerButton", onClick: this.addQuestion.bind(this) },
-          "+"
-        )
+        footer
       );
     }
   }]);
@@ -1369,7 +1367,12 @@ var _default = (function (_React$Component) {
   _createClass(_default, [{
     key: "render",
     value: function render() {
-      var footer = this.props.footer == 0 ? _react2["default"].createElement(
+      var header = _react2["default"].createElement(
+        "div",
+        { className: "header" },
+        this.props.isCourse ? this.props.course.title : this.props.section.title
+      );
+      var footer = this.props.isCourse ? _react2["default"].createElement(
         "div",
         { className: "footerButton", onClick: this.props.addQuizModal.bind(this) },
         "+"
@@ -1380,15 +1383,11 @@ var _default = (function (_React$Component) {
         _react2["default"].createElement(
           "div",
           { className: "scrollRegion" },
-          _react2["default"].createElement(
-            "div",
-            { className: "header" },
-            this.props.title.title
-          ),
+          header,
           _react2["default"].createElement(
             "div",
             { className: "body" },
-            this.props.data.quizzes.map(function (quiz, i) {
+            this.props.course.quizzes.map(function (quiz, i) {
               return _react2["default"].createElement(
                 "div",
                 { onClick: this.props.showMetricModal.bind(this, quiz), key: i, title: quiz, ref: 'quiz' + i, className: "item" },

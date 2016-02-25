@@ -74,6 +74,8 @@ export default class AddQuizBody extends React.Component {
         />
       </div>
     );
+
+    var footer = this.state.isAddFreeResponse ? null : <div className="footerButton" onClick={this.addQuestion.bind(this)} >+</div>;
     return (
       <div id="addQuestionBody">
         <div className="row">
@@ -105,7 +107,7 @@ export default class AddQuizBody extends React.Component {
         <div className="pb20 pl20 pr20">
           <div className="modalButton" onClick={this.props.addQuestionToQuiz.bind(this, this.state.question, this.props.quizIndex)}>ADD QUESTION</div>
         </div>
-        <div className="footerButton" onClick={this.addQuestion.bind(this)} >+</div>
+        {footer}
       </div>
     );
   }

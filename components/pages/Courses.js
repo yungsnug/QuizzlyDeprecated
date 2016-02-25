@@ -1,97 +1,39 @@
 // "use strict";
 
-var courses201 = [
-  {
-    title: "CSCI 201",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"},
-      {title: "Week 5"},
-      {title: "Week 6"},
-      {title: "Week 7"},
-      {title: "Week 8"}
-    ]
-  },
-  {
-    title: "67558",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"},
-      {title: "Week 5"},
-      {title: "Week 6"},
-      {title: "Week 7"},
-      {title: "Week 8"}
-    ]
-  },
-  {
-    title: "49939",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"},
-      {title: "Week 5"},
-      {title: "Week 6"},
-      {title: "Week 7"},
-      {title: "Week 8"}
-    ]
-  },
-  {
-    title: "12283",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"},
-      {title: "Week 5"},
-      {title: "Week 6"},
-      {title: "Week 7"},
-      {title: "Week 8"}
-    ]
-  }
+var course201 = {
+  title: "CSCI 201",
+  quizzes: [
+    {title: "Week 1"},
+    {title: "Week 2"},
+    {title: "Week 3"},
+    {title: "Week 4"},
+    {title: "Week 5"},
+    {title: "Week 6"},
+    {title: "Week 7"},
+    {title: "Week 8"}
+  ]
+};
+
+var sections201 = [
+  { title: "67558" },
+  { title: "49939" },
+  { title: "12283" }
 ];
 
-var courses104 = [
-  {
-    title: "CSCI 104",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"}
-    ]
-  },
-  {
-    title: "98857",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"}
-    ]
-  },
-  {
-    title: "79988",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"}
-    ]
-  },
-  {
-    title: "09932",
-    quizzes: [
-      {title: "Week 1"},
-      {title: "Week 2"},
-      {title: "Week 3"},
-      {title: "Week 4"}
-    ]
-  }
+var course104 = {
+  title: "CSCI 104",
+  quizzes: [
+    {title: "Week 1"},
+    {title: "Week 2"},
+    {title: "Week 3"},
+    {title: "Week 4"}
+  ]
+};
+
+var sections104 = [
+  { title: "98857" },
+  { title: "79988" },
+  { title: "09932" }
 ];
 
 import React from 'react'
@@ -107,7 +49,8 @@ export default class Courses extends React.Component {
     this.state = {
       dropdownValue: "CSCI 201",
       semesterDropdownValue: "Fall 2016",
-      courses: courses201,
+      course: course201,
+      sections: sections201,
       showModal: false,
       showMetricModal: false,
       modalInfo: {
@@ -119,18 +62,26 @@ export default class Courses extends React.Component {
 
   componentDidMount() {
     var me = this;
-    $.ajax({
-      type: 'post',
-      url: "/course/find",
-      data: {professor: 1},
-      dataType: 'json'
-    }).done(function(courses) {
-      console.log("courses", courses);
+
+    $.when(
+      $.post("/course/find",
+        { course: 1 }
+      ),
+      $.post("/section/find",
+        {
+          professor: 1,
+          course: 1
+        }
+      )
+    ).then(function(course, sections) {
+      console.log("course", course[0]);
+      console.log("sections", sections[0]);
+
+      if(course[0].length == 0) return; // if there are no courses, then there are no sections
       me.setState({
-        courses: courses
+        course: course,
+        sections: sections
       });
-    }).fail(function(error) {
-      console.log("fail", error);
     });
   }
 
@@ -153,16 +104,20 @@ export default class Courses extends React.Component {
   }
 
   handleDropdownChange(event) {
-    var courses = {};
+    var course = {};
+    var sections = [];
     if(event.target.value === "CSCI 104") {
-      courses = courses104;
+      course = course104;
+      sections = sections104;
     } else if(event.target.value === "CSCI 201") {
-      courses = courses201;
+      course = course201;
+      sections = sections201;
     }
 
     this.setState({
       dropdownValue: event.target.value,
-      courses: courses
+      course: course,
+      sections: sections
     });
   }
 
@@ -196,11 +151,9 @@ export default class Courses extends React.Component {
 
   addQuizToCourse(quiz) {
     console.log("Adding quiz '" +  quiz.title + "' in course " + this.state.dropdownValue);
-    var courses = this.state.courses;
-    for(var i = 0; i < courses.length; ++i) {
-      courses[i].quizzes.push({title: quiz.title});
-    }
-    this.setState({courses: courses});
+    var course = this.state.course;
+    course.quizzes.push({title: quiz.title});
+    this.setState({course: course});
     this.closeModal();
   }
 
@@ -218,15 +171,21 @@ export default class Courses extends React.Component {
             <option value="CSCI 104">Spring 2015</option>
             <option value="CSCI 104">Fall 2015</option>
           </select>
-          {this.state.courses.map(function(course, i) {
+          <Course
+            course={this.state.course}
+            isCourse={true}
+            ref={'course'}
+            addQuizModal={this.addQuizModal.bind(this)}
+            showMetricModal={this.showMetricModal.bind(this)}
+          />
+          {this.state.sections.map(function(section, i) {
             return (
               <Course
-                data={course}
+                section={section}
+                course={this.state.course}
+                isCourse={false}
                 key={i}
-                title={course}
-                ref={'course' + i}
-                footer={i}
-                addQuizModal={this.addQuizModal.bind(this)}
+                ref={'section' + i}
                 showMetricModal={this.showMetricModal.bind(this)}
               />
             );

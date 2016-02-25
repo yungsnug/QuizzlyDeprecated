@@ -8,7 +8,7 @@
 module.exports = {
   // Primitives
   attributes: {
-    title: {
+    title: { // 'CSCI 201'
       type: 'string'
     },
     professor: {

@@ -8,7 +8,7 @@
 module.exports = {
   attributes: {
     // Primitives
-    title: {
+    title: { // '84495' - a CRN number
       type: 'string'
     },
 
