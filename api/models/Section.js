@@ -1,5 +1,5 @@
 /**
-* Question.js
+* Section.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,23 +8,18 @@
 module.exports = {
   attributes: {
     // Primitives
-    text: {
+    title: {
       type: 'string'
-    },
-    type: {
-      type: 'string',
-      enum: ['multipleChoice', 'freeResponse'],
-      required: true
     },
 
     // Associations
-    quiz: {
-      model: 'quiz'
+    course: {
+      model: 'course'
     },
-    answers: {
-      collection: 'answer',
-      via: 'question'
-    }
+    students: {
+      collection: 'student',
+      via: 'section'
+    },
 
     // Methods
   }

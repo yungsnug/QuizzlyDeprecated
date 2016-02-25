@@ -6,25 +6,24 @@
 */
 
 module.exports = {
+  // Primitives
+  text: {
+    type: 'string',
+    required: true
+  },
+  correct: {
+    type: 'boolean'
+  },
+  option: {
+    type: 'string',
+    enum: ['A', 'B', 'C', 'D', 'E'],
+    defaultsTo: 'A'
+  },
 
-  attributes: {
-    id: {
-      type: 'integer',
-      primaryKey: true,
-      autoIncrement: true
-    },
-
-    text : { type: 'string' },
-
-    question: {
-      model: 'question'
-    },
-
-    correct: { type: 'boolean' },
-
-    answersPerProfessor: {
-      collection: 'answerPerProfessor',
-      via: 'answer'
-    }
+  // Associations
+  question: {
+    model: 'question'
   }
+
+  // Methods
 };

@@ -1952,7 +1952,7 @@ var Sidebar = (function (_React$Component) {
           _react2['default'].createElement(
             _reactRouter.Link,
             { to: 'courses' },
-            'My Courses'
+            'Courses'
           )
         ),
         _react2['default'].createElement(
@@ -1961,16 +1961,7 @@ var Sidebar = (function (_React$Component) {
           _react2['default'].createElement(
             _reactRouter.Link,
             { to: 'quizzes' },
-            'My Quizzes'
-          )
-        ),
-        _react2['default'].createElement(
-          'div',
-          { className: this.isActive('create'), onClick: this.setFilter.bind(this, 'create') },
-          _react2['default'].createElement(
-            _reactRouter.Link,
-            { to: '/' },
-            'Create Quiz'
+            'Quizzes'
           )
         ),
         _react2['default'].createElement(
