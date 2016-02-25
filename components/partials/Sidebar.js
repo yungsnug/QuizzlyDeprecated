@@ -120,13 +120,10 @@ export class Sidebar extends React.Component {
       <div id="quizzlySidebar" className="lightGreenBackground floatL borderleft alignC borderRight" style={{"width": "192px", "height": "100vh"}}>
         <h1 className="alignC white greenBlueGradient flexCenter borderBottom mb30" style={{"height": "57px"}}>QUIZZLY</h1>
         <div className={this.isActive('courses')} onClick={this.setFilter.bind(this, 'courses')}>
-          <Link to="courses">My Courses</Link>
+          <Link to="courses">Courses</Link>
         </div>
         <div className={this.isActive('quizzes')} onClick={this.setFilter.bind(this, 'quizzes')}>
-          <Link to="quizzes">My Quizzes</Link>
-        </div>
-        <div className={this.isActive('create')} onClick={this.setFilter.bind(this, 'create')}>
-          <Link to="/">Create Quiz</Link>
+          <Link to="quizzes">Quizzes</Link>
         </div>
         <div className={this.isActive('metrics')} onClick={this.setFilter.bind(this, 'metrics')}>
           <Link to="/">Metrics</Link>

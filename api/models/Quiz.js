@@ -6,23 +6,21 @@
 */
 
 module.exports = {
-
   attributes: {
-    id: {
-      type: 'integer',
-      primaryKey: true,
-      autoIncrement: true
+    // Primitives
+    title: {
+      type: 'string'
     },
 
-    title : { type: 'string' },
-
-    professor: {
-      model: 'professor'
+    // Associations
+    course: {
+      model: 'course'
     },
-
     questions: {
       collection: 'question',
       via: 'quiz'
     }
+
+    // Methods
   }
 };
