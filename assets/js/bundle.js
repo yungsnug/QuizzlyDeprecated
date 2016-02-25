@@ -1,15 +1,50 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var React = require('react'),
-    Router = require('react-router');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-Router.run(require('./routes.js'), Router.HistoryLocation, function (Root) {
-  React.render(React.createElement(Root, window.__ReactInitState__), document.body);
-  delete window.__ReactInitState__;
-});
+var _react = require('react');
 
-},{"./routes.js":20,"react":"react","react-router":"react-router"}],2:[function(require,module,exports){
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactRouter = require('react-router');
+
+var _pagesHomeJs = require('./pages/home.js');
+
+var _pagesHomeJs2 = _interopRequireDefault(_pagesHomeJs);
+
+var _pagesEntranceJs = require('./pages/Entrance.js');
+
+var _pagesEntranceJs2 = _interopRequireDefault(_pagesEntranceJs);
+
+var _pagesCoursesJs = require('./pages/Courses.js');
+
+var _pagesCoursesJs2 = _interopRequireDefault(_pagesCoursesJs);
+
+var _pagesQuizzesJs = require('./pages/Quizzes.js');
+
+var _pagesQuizzesJs2 = _interopRequireDefault(_pagesQuizzesJs);
+
+(0, _reactDom.render)(_react2['default'].createElement(
+  _reactRouter.Router,
+  { history: _reactRouter.browserHistory },
+  _react2['default'].createElement(
+    _reactRouter.Route,
+    { path: '/', component: _pagesHomeJs2['default'] },
+    _react2['default'].createElement(_reactRouter.Route, { path: 'entrance', component: _pagesEntranceJs2['default'] }),
+    _react2['default'].createElement(_reactRouter.Route, { path: 'courses', component: _pagesCoursesJs2['default'] }),
+    _react2['default'].createElement(_reactRouter.Route, { path: 'quizzes', component: _pagesQuizzesJs2['default'] })
+  )
+), document.body);
+
+// Router.run(require('./routes.js'), Router.HistoryLocation, (Root) => {
+//   React.render(<Root {...window.__ReactInitState__} />, document.body);
+//   delete window.__ReactInitState__;
+// });
+
+},{"./pages/Courses.js":3,"./pages/Entrance.js":4,"./pages/Quizzes.js":5,"./pages/home.js":8,"react":"react","react-dom":43,"react-router":"react-router"}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, '__esModule', {
@@ -38,6 +73,8 @@ var Layout = (function () {
   // {React.Children.map(me.props.children, function (child) {
   //   return React.cloneElement(child, { xxx: "jackson polluck" });
   // })}
+
+  // {this.props.children}
 
   _createClass(Layout, [{
     key: 'render',
@@ -479,7 +516,7 @@ var _default = (function (_React$Component) {
 exports['default'] = _default;
 module.exports = exports['default'];
 
-},{"../layout.js":2,"react":"react","react-router":"react-router","react-router/lib/BrowserHistory":23}],5:[function(require,module,exports){
+},{"../layout.js":2,"react":"react","react-router":"react-router","react-router/lib/BrowserHistory":44}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, '__esModule', {
@@ -2137,33 +2174,7 @@ exports.View = View;
 },{"react":"react","sails-react-store":"sails-react-store"}],20:[function(require,module,exports){
 "use strict";
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactRouter = require('react-router');
-
-module.exports =
-// <Router history={browserHistory}>
-_react2['default'].createElement(
-  _reactRouter.Route,
-  { handler: _reactRouter.RouteHandler },
-  _react2['default'].createElement(_reactRouter.Route, { name: 'home', path: '/', handler: require('./pages/home.js') }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'articles', path: '/articles', handler: require('./pages/articles.js') }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'entrance', path: '/entrance', handler: require('./pages/Entrance.js') }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'courses', path: '/courses', handler: require('./pages/Courses.js') }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'quizzes', path: '/quizzes', handler: require('./pages/Quizzes.js') }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'article', path: '/article/:id', handler: require('./pages/article.js') })
-)
-// </Router>
-;
-// <Route name="courses" path="/courses/:coursesData" handler={require('./pages/Courses.js')} />
-
-},{"./pages/Courses.js":3,"./pages/Entrance.js":4,"./pages/Quizzes.js":5,"./pages/article.js":6,"./pages/articles.js":7,"./pages/home.js":8,"react":"react","react-dom":22,"react-router":"react-router"}],21:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2257,73 +2268,6 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],22:[function(require,module,exports){
-'use strict';
-
-module.exports = require('react/lib/ReactDOM');
-
-},{"react/lib/ReactDOM":80}],23:[function(require,module,exports){
-'use strict';
-
-exports.__esModule = true;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _historyLibCreateBrowserHistory = require('history/lib/createBrowserHistory');
-
-var _historyLibCreateBrowserHistory2 = _interopRequireDefault(_historyLibCreateBrowserHistory);
-
-var _createRouterHistory = require('./createRouterHistory');
-
-var _createRouterHistory2 = _interopRequireDefault(_createRouterHistory);
-
-exports['default'] = _createRouterHistory2['default'](_historyLibCreateBrowserHistory2['default']);
-module.exports = exports['default'];
-},{"./createRouterHistory":24,"history/lib/createBrowserHistory":32}],24:[function(require,module,exports){
-'use strict';
-
-exports.__esModule = true;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _useRouterHistory = require('./useRouterHistory');
-
-var _useRouterHistory2 = _interopRequireDefault(_useRouterHistory);
-
-var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-
-exports['default'] = function (createHistory) {
-  var history = undefined;
-  if (canUseDOM) history = _useRouterHistory2['default'](createHistory)();
-  return history;
-};
-
-module.exports = exports['default'];
-},{"./useRouterHistory":25}],25:[function(require,module,exports){
-'use strict';
-
-exports.__esModule = true;
-exports['default'] = useRouterHistory;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _historyLibUseQueries = require('history/lib/useQueries');
-
-var _historyLibUseQueries2 = _interopRequireDefault(_historyLibUseQueries);
-
-var _historyLibUseBasename = require('history/lib/useBasename');
-
-var _historyLibUseBasename2 = _interopRequireDefault(_historyLibUseBasename);
-
-function useRouterHistory(createHistory) {
-  return function (options) {
-    var history = _historyLibUseQueries2['default'](_historyLibUseBasename2['default'](createHistory))(options);
-    history.__v2_compatible__ = true;
-    return history;
-  };
-}
-
-module.exports = exports['default'];
-},{"history/lib/useBasename":38,"history/lib/useQueries":39}],26:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -2355,7 +2299,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],27:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -2382,7 +2326,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],28:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -2458,7 +2402,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":21,"warning":46}],29:[function(require,module,exports){
+},{"_process":21,"warning":42}],25:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2534,13 +2478,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],30:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],31:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2590,7 +2534,7 @@ function parsePath(path) {
   };
 }
 }).call(this,require('_process'))
-},{"_process":21,"warning":46}],32:[function(require,module,exports){
+},{"_process":21,"warning":42}],28:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2769,7 +2713,7 @@ function createBrowserHistory() {
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":26,"./DOMStateStorage":28,"./DOMUtils":29,"./ExecutionEnvironment":30,"./PathUtils":31,"./createDOMHistory":33,"_process":21,"invariant":45}],33:[function(require,module,exports){
+},{"./Actions":22,"./DOMStateStorage":24,"./DOMUtils":25,"./ExecutionEnvironment":26,"./PathUtils":27,"./createDOMHistory":29,"_process":21,"invariant":39}],29:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2812,7 +2756,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":29,"./ExecutionEnvironment":30,"./createHistory":34,"_process":21,"invariant":45}],34:[function(require,module,exports){
+},{"./DOMUtils":25,"./ExecutionEnvironment":26,"./createHistory":30,"_process":21,"invariant":39}],30:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3103,7 +3047,7 @@ function createHistory() {
 exports['default'] = createHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":26,"./AsyncUtils":27,"./PathUtils":31,"./createLocation":35,"./deprecate":36,"./runTransitionHook":37,"_process":21,"deep-equal":40,"warning":46}],35:[function(require,module,exports){
+},{"./Actions":22,"./AsyncUtils":23,"./PathUtils":27,"./createLocation":31,"./deprecate":32,"./runTransitionHook":33,"_process":21,"deep-equal":36,"warning":42}],31:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3157,7 +3101,7 @@ function createLocation() {
 exports['default'] = createLocation;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":26,"./PathUtils":31,"_process":21,"warning":46}],36:[function(require,module,exports){
+},{"./Actions":22,"./PathUtils":27,"_process":21,"warning":42}],32:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3179,7 +3123,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":21,"warning":46}],37:[function(require,module,exports){
+},{"_process":21,"warning":42}],33:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3206,7 +3150,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":21,"warning":46}],38:[function(require,module,exports){
+},{"_process":21,"warning":42}],34:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3345,7 +3289,7 @@ function useBasename(createHistory) {
 
 exports['default'] = useBasename;
 module.exports = exports['default'];
-},{"./ExecutionEnvironment":30,"./PathUtils":31,"./deprecate":36,"./runTransitionHook":37}],39:[function(require,module,exports){
+},{"./ExecutionEnvironment":26,"./PathUtils":27,"./deprecate":32,"./runTransitionHook":33}],35:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3527,7 +3471,7 @@ function useQueries(createHistory) {
 exports['default'] = useQueries;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./PathUtils":31,"./deprecate":36,"./runTransitionHook":37,"_process":21,"query-string":43,"warning":46}],40:[function(require,module,exports){
+},{"./PathUtils":27,"./deprecate":32,"./runTransitionHook":33,"_process":21,"query-string":40,"warning":42}],36:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -3623,7 +3567,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":41,"./lib/keys.js":42}],41:[function(require,module,exports){
+},{"./lib/is_arguments.js":37,"./lib/keys.js":38}],37:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -3645,7 +3589,7 @@ function unsupported(object){
     false;
 };
 
-},{}],42:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -3656,7 +3600,60 @@ function shim (obj) {
   return keys;
 }
 
-},{}],43:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
+/**
+ * Copyright 2013-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if ("development" !== 'production') {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+},{}],40:[function(require,module,exports){
 'use strict';
 var strictUriEncode = require('strict-uri-encode');
 
@@ -3724,7 +3721,7 @@ exports.stringify = function (obj) {
 	}).join('&') : '';
 };
 
-},{"strict-uri-encode":44}],44:[function(require,module,exports){
+},{"strict-uri-encode":41}],41:[function(require,module,exports){
 'use strict';
 module.exports = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -3732,60 +3729,7 @@ module.exports = function (str) {
 	});
 };
 
-},{}],45:[function(require,module,exports){
-/**
- * Copyright 2013-2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-'use strict';
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if ("development" !== 'production') {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  }
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-};
-
-module.exports = invariant;
-
-},{}],46:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -3847,7 +3791,74 @@ if ("development" !== 'production') {
 
 module.exports = warning;
 
-},{}],47:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
+'use strict';
+
+module.exports = require('react/lib/ReactDOM');
+
+},{"react/lib/ReactDOM":80}],44:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _historyLibCreateBrowserHistory = require('history/lib/createBrowserHistory');
+
+var _historyLibCreateBrowserHistory2 = _interopRequireDefault(_historyLibCreateBrowserHistory);
+
+var _createRouterHistory = require('./createRouterHistory');
+
+var _createRouterHistory2 = _interopRequireDefault(_createRouterHistory);
+
+exports['default'] = _createRouterHistory2['default'](_historyLibCreateBrowserHistory2['default']);
+module.exports = exports['default'];
+},{"./createRouterHistory":45,"history/lib/createBrowserHistory":28}],45:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _useRouterHistory = require('./useRouterHistory');
+
+var _useRouterHistory2 = _interopRequireDefault(_useRouterHistory);
+
+var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+exports['default'] = function (createHistory) {
+  var history = undefined;
+  if (canUseDOM) history = _useRouterHistory2['default'](createHistory)();
+  return history;
+};
+
+module.exports = exports['default'];
+},{"./useRouterHistory":46}],46:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+exports['default'] = useRouterHistory;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _historyLibUseQueries = require('history/lib/useQueries');
+
+var _historyLibUseQueries2 = _interopRequireDefault(_historyLibUseQueries);
+
+var _historyLibUseBasename = require('history/lib/useBasename');
+
+var _historyLibUseBasename2 = _interopRequireDefault(_historyLibUseBasename);
+
+function useRouterHistory(createHistory) {
+  return function (options) {
+    var history = _historyLibUseQueries2['default'](_historyLibUseBasename2['default'](createHistory))(options);
+    history.__v2_compatible__ = true;
+    return history;
+  };
+}
+
+module.exports = exports['default'];
+},{"history/lib/useBasename":34,"history/lib/useQueries":35}],47:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
