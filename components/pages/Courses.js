@@ -118,6 +118,7 @@ export default class Courses extends React.Component {
   }
 
   componentDidMount() {
+    var me = this;
     $.ajax({
       type: 'post',
       url: "/course/find",
@@ -125,7 +126,9 @@ export default class Courses extends React.Component {
       dataType: 'json'
     }).done(function(courses) {
       console.log("courses", courses);
-      professor.course
+      me.setState({
+        courses: courses
+      });
     }).fail(function(error) {
       console.log("fail", error);
     });

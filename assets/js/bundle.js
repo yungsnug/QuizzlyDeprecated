@@ -147,6 +147,7 @@ var Courses = (function (_React$Component) {
   _createClass(Courses, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var me = this;
       $.ajax({
         type: 'post',
         url: "/course/find",
@@ -154,7 +155,9 @@ var Courses = (function (_React$Component) {
         dataType: 'json'
       }).done(function (courses) {
         console.log("courses", courses);
-        professor.course;
+        me.setState({
+          courses: courses
+        });
       }).fail(function (error) {
         console.log("fail", error);
       });
