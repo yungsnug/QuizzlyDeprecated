@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     options: {
       external: ['react', 'react-router', 'sails-store', 'sails-react-store'],
       transform: [
-        [require("babelify"), require('grunt-react').browserify]
+        [require("babelify")]
       ],
       harmony: true
     },
@@ -28,6 +28,3 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-browserify');
 };
-
-
-

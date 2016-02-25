@@ -21,7 +21,7 @@ var sections201 = [
 ];
 
 var course104 = {
-  title: "CSCI 104",
+  title: "CSCI 350",
   quizzes: [
     {title: "Week 1"},
     {title: "Week 2"},
